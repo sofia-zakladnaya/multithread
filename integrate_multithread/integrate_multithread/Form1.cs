@@ -16,5 +16,11 @@ namespace integrate_multithread
         {
             InitializeComponent();
         }
+
+        private void оПрограммеToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AboutForm about = new AboutForm();
+            about.ShowDialog();
+        }
     }
 }
