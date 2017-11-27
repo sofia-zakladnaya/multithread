@@ -22,5 +22,11 @@ namespace integrate_multithread
             AboutForm about = new AboutForm();
             about.ShowDialog();
         }
+
+        private void btnClearResults_Click(object sender, EventArgs e)
+        {
+            //Очищаем таблицу результатов
+            dgResults.Rows.Clear();
+        }
     }
 }
