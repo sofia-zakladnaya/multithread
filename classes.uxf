@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>10</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>190</x>
+      <y>150</y>
+      <w>390</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>Integral
+--
+-double a //пределы
+-double b
+-double result //результат
+-double eps //точность
+-int n
+--
+-void Solve(delegate double f(double x), IntMethod method)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>760</x>
+      <y>190</y>
+      <w>320</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes>enum IntMethod
+--
+Rectangle, //Метод средних прямоугольников
+Trapezoidal, //Метод трапеций
+Simpson //Метод Симпсона</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
