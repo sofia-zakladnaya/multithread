@@ -17,7 +17,7 @@
 -double eps //точность
 -int n
 --
--void Solve(delegate double f(double x), IntMethod method)</panel_attributes>
+-void Solve(delegate f, IntMethod method)</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
