@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "integrate_multithread", "integrate_multithread\integrate_multithread.csproj", "{A48DB893-F467-4A79-9728-ECE3219DDA02}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A48DB893-F467-4A79-9728-ECE3219DDA02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A48DB893-F467-4A79-9728-ECE3219DDA02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A48DB893-F467-4A79-9728-ECE3219DDA02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A48DB893-F467-4A79-9728-ECE3219DDA02}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
