@@ -1,5 +1,9 @@
 ﻿using System;
+<<<<<<< HEAD
 using System.Collections.Generic;
+=======
+//using System.Collections.Generic;
+>>>>>>> 9140619a4df55a62276a051245a935a5c966b09c
 //using System.ComponentModel;
 //using System.Data;
 //using System.Drawing;
