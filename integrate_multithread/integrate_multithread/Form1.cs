@@ -48,14 +48,14 @@ namespace integrate_multithread
             }
 
             //Если параметры заданы корректно, запускаем решение
-           
+         
             
         }
 
         public int Verify()
         {
-            double a, b;
-            int n, k;
+            double a, b, eps;
+            int k;
            
            
 
@@ -75,19 +75,19 @@ namespace integrate_multithread
                 throw new Exception("Отрезок интегрирования должен быть не вырожденным");
             }
 
-            n = Convert.ToInt32(tbInvervalsNum.Text);
+            eps = Convert.ToDouble(tbAccuracy.Text);
             
             //проверяем число разбиений
-            if (n<=0)
+            if (eps<=0)
             {
-                throw new Exception("Количество разбиений должнобыть положительным числом");
+                throw new Exception("Точность должна быть положительным числом");
             }
 
             k = Convert.ToInt32(tbThreadsNum.Text);
             //проверяем число потоков
             if (k <= 0)
             {
-                throw new Exception("Количество потоков должнобыть положительным числом");
+                throw new Exception("Количество потоков должно быть положительным числом");
             }   
             
             //Если всё заданно корректно

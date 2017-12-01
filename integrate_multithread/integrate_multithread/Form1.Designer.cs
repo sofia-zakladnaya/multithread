@@ -32,9 +32,12 @@
             this.справкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.оПрограммеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pnSettings = new System.Windows.Forms.Panel();
+            this.gbGridType = new System.Windows.Forms.GroupBox();
+            this.rbIrregular = new System.Windows.Forms.RadioButton();
+            this.rbRegular = new System.Windows.Forms.RadioButton();
             this.tbThreadsNum = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.tbInvervalsNum = new System.Windows.Forms.TextBox();
+            this.tbAccuracy = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.btnClearResults = new System.Windows.Forms.Button();
             this.btnSolve = new System.Windows.Forms.Button();
@@ -53,10 +56,14 @@
             this.ThreadNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Time = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Acceleration = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.StatusBar = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1.SuspendLayout();
             this.pnSettings.SuspendLayout();
+            this.gbGridType.SuspendLayout();
             this.gbIntMethod.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgResults)).BeginInit();
+            this.StatusBar.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -86,9 +93,10 @@
             // 
             // pnSettings
             // 
+            this.pnSettings.Controls.Add(this.gbGridType);
             this.pnSettings.Controls.Add(this.tbThreadsNum);
             this.pnSettings.Controls.Add(this.label3);
-            this.pnSettings.Controls.Add(this.tbInvervalsNum);
+            this.pnSettings.Controls.Add(this.tbAccuracy);
             this.pnSettings.Controls.Add(this.label2);
             this.pnSettings.Controls.Add(this.btnClearResults);
             this.pnSettings.Controls.Add(this.btnSolve);
@@ -100,12 +108,46 @@
             this.pnSettings.Controls.Add(this.gbIntMethod);
             this.pnSettings.Location = new System.Drawing.Point(563, 27);
             this.pnSettings.Name = "pnSettings";
-            this.pnSettings.Size = new System.Drawing.Size(200, 466);
+            this.pnSettings.Size = new System.Drawing.Size(200, 440);
             this.pnSettings.TabIndex = 2;
+            // 
+            // gbGridType
+            // 
+            this.gbGridType.Controls.Add(this.rbIrregular);
+            this.gbGridType.Controls.Add(this.rbRegular);
+            this.gbGridType.Location = new System.Drawing.Point(3, 211);
+            this.gbGridType.Name = "gbGridType";
+            this.gbGridType.Size = new System.Drawing.Size(188, 66);
+            this.gbGridType.TabIndex = 3;
+            this.gbGridType.TabStop = false;
+            this.gbGridType.Text = "Разбиение";
+            // 
+            // rbIrregular
+            // 
+            this.rbIrregular.AutoSize = true;
+            this.rbIrregular.Enabled = false;
+            this.rbIrregular.Location = new System.Drawing.Point(6, 42);
+            this.rbIrregular.Name = "rbIrregular";
+            this.rbIrregular.Size = new System.Drawing.Size(107, 17);
+            this.rbIrregular.TabIndex = 1;
+            this.rbIrregular.Text = "Неравномерная";
+            this.rbIrregular.UseVisualStyleBackColor = true;
+            // 
+            // rbRegular
+            // 
+            this.rbRegular.AutoSize = true;
+            this.rbRegular.Checked = true;
+            this.rbRegular.Location = new System.Drawing.Point(6, 19);
+            this.rbRegular.Name = "rbRegular";
+            this.rbRegular.Size = new System.Drawing.Size(94, 17);
+            this.rbRegular.TabIndex = 0;
+            this.rbRegular.TabStop = true;
+            this.rbRegular.Text = "Равномерная";
+            this.rbRegular.UseVisualStyleBackColor = true;
             // 
             // tbThreadsNum
             // 
-            this.tbThreadsNum.Location = new System.Drawing.Point(3, 274);
+            this.tbThreadsNum.Location = new System.Drawing.Point(3, 365);
             this.tbThreadsNum.Name = "tbThreadsNum";
             this.tbThreadsNum.Size = new System.Drawing.Size(188, 20);
             this.tbThreadsNum.TabIndex = 11;
@@ -113,31 +155,31 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 258);
+            this.label3.Location = new System.Drawing.Point(6, 349);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(83, 13);
             this.label3.TabIndex = 10;
             this.label3.Text = "Число потоков";
             // 
-            // tbInvervalsNum
+            // tbAccuracy
             // 
-            this.tbInvervalsNum.Location = new System.Drawing.Point(3, 224);
-            this.tbInvervalsNum.Name = "tbInvervalsNum";
-            this.tbInvervalsNum.Size = new System.Drawing.Size(188, 20);
-            this.tbInvervalsNum.TabIndex = 9;
+            this.tbAccuracy.Location = new System.Drawing.Point(3, 315);
+            this.tbAccuracy.Name = "tbAccuracy";
+            this.tbAccuracy.Size = new System.Drawing.Size(188, 20);
+            this.tbAccuracy.TabIndex = 9;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 208);
+            this.label2.Location = new System.Drawing.Point(6, 299);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(96, 13);
+            this.label2.Size = new System.Drawing.Size(54, 13);
             this.label2.TabIndex = 8;
-            this.label2.Text = "Число разбиений";
+            this.label2.Text = "Точность";
             // 
             // btnClearResults
             // 
-            this.btnClearResults.Location = new System.Drawing.Point(116, 425);
+            this.btnClearResults.Location = new System.Drawing.Point(116, 409);
             this.btnClearResults.Name = "btnClearResults";
             this.btnClearResults.Size = new System.Drawing.Size(75, 28);
             this.btnClearResults.TabIndex = 7;
@@ -147,7 +189,7 @@
             // 
             // btnSolve
             // 
-            this.btnSolve.Location = new System.Drawing.Point(3, 425);
+            this.btnSolve.Location = new System.Drawing.Point(3, 409);
             this.btnSolve.Name = "btnSolve";
             this.btnSolve.Size = new System.Drawing.Size(75, 28);
             this.btnSolve.TabIndex = 6;
@@ -213,28 +255,29 @@
             // rbSimpson
             // 
             this.rbSimpson.AutoSize = true;
+            this.rbSimpson.Enabled = false;
             this.rbSimpson.Location = new System.Drawing.Point(6, 65);
             this.rbSimpson.Name = "rbSimpson";
             this.rbSimpson.Size = new System.Drawing.Size(76, 17);
             this.rbSimpson.TabIndex = 2;
-            this.rbSimpson.TabStop = true;
             this.rbSimpson.Text = "Симпсона";
             this.rbSimpson.UseVisualStyleBackColor = true;
             // 
             // rbTrapezoidal
             // 
             this.rbTrapezoidal.AutoSize = true;
+            this.rbTrapezoidal.Enabled = false;
             this.rbTrapezoidal.Location = new System.Drawing.Point(6, 42);
             this.rbTrapezoidal.Name = "rbTrapezoidal";
             this.rbTrapezoidal.Size = new System.Drawing.Size(74, 17);
             this.rbTrapezoidal.TabIndex = 1;
-            this.rbTrapezoidal.TabStop = true;
             this.rbTrapezoidal.Text = "Трапеций";
             this.rbTrapezoidal.UseVisualStyleBackColor = true;
             // 
             // rbRectangle
             // 
             this.rbRectangle.AutoSize = true;
+            this.rbRectangle.Checked = true;
             this.rbRectangle.Location = new System.Drawing.Point(6, 19);
             this.rbRectangle.Name = "rbRectangle";
             this.rbRectangle.Size = new System.Drawing.Size(117, 17);
@@ -257,7 +300,7 @@
             this.dgResults.Location = new System.Drawing.Point(0, 27);
             this.dgResults.Name = "dgResults";
             this.dgResults.ReadOnly = true;
-            this.dgResults.Size = new System.Drawing.Size(557, 466);
+            this.dgResults.Size = new System.Drawing.Size(557, 440);
             this.dgResults.TabIndex = 3;
             // 
             // IntegralValue
@@ -290,11 +333,28 @@
             this.Acceleration.Name = "Acceleration";
             this.Acceleration.ReadOnly = true;
             // 
+            // StatusBar
+            // 
+            this.StatusBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel1});
+            this.StatusBar.Location = new System.Drawing.Point(0, 470);
+            this.StatusBar.Name = "StatusBar";
+            this.StatusBar.Size = new System.Drawing.Size(763, 22);
+            this.StatusBar.TabIndex = 4;
+            this.StatusBar.Text = "Строка состояния";
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(106, 17);
+            this.toolStripStatusLabel1.Text = "Строка состояния";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(763, 492);
+            this.Controls.Add(this.StatusBar);
             this.Controls.Add(this.dgResults);
             this.Controls.Add(this.pnSettings);
             this.Controls.Add(this.menuStrip1);
@@ -305,9 +365,13 @@
             this.menuStrip1.PerformLayout();
             this.pnSettings.ResumeLayout(false);
             this.pnSettings.PerformLayout();
+            this.gbGridType.ResumeLayout(false);
+            this.gbGridType.PerformLayout();
             this.gbIntMethod.ResumeLayout(false);
             this.gbIntMethod.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgResults)).EndInit();
+            this.StatusBar.ResumeLayout(false);
+            this.StatusBar.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -320,7 +384,7 @@
         private System.Windows.Forms.Panel pnSettings;
         private System.Windows.Forms.TextBox tbThreadsNum;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox tbInvervalsNum;
+        private System.Windows.Forms.TextBox tbAccuracy;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnClearResults;
         private System.Windows.Forms.Button btnSolve;
@@ -339,6 +403,11 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ThreadNumber;
         private System.Windows.Forms.DataGridViewTextBoxColumn Time;
         private System.Windows.Forms.DataGridViewTextBoxColumn Acceleration;
+        private System.Windows.Forms.GroupBox gbGridType;
+        private System.Windows.Forms.RadioButton rbIrregular;
+        private System.Windows.Forms.RadioButton rbRegular;
+        private System.Windows.Forms.StatusStrip StatusBar;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
     }
 }
 
