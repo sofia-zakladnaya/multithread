@@ -1,16 +1,13 @@
-<<<<<<< HEAD
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 ////using System.Linq;
 ////using System.Text;
 using System.Threading;
-=======
 ﻿////using System;
-using System.Collections.Generic;
 ////using System.Linq;
 ////using System.Text;
 ////using System.Threading.Tasks;
->>>>>>> 9140619a4df55a62276a051245a935a5c966b09c
+
 
 namespace integrate_multithread
 {
@@ -25,7 +22,7 @@ namespace integrate_multithread
         public double Eps { get; set; }
         //Метод интегрирования
         public IntgMethod Method { get; set; }
-<<<<<<< HEAD
+
         //Разбиения
         public List<Integral> SubIntegrals { get; set; }
         //Результаты интегрирования
@@ -133,25 +130,13 @@ namespace integrate_multithread
         private void Simpson()
         {
             throw new Exception("Метод нереализован");
-=======
-        //Результаты интегрирования
-        public double Value { get; set; }
-        
-        //Вычисление значения интеграла
-        public void Solve()
-        {
-            //TODO
->>>>>>> 9140619a4df55a62276a051245a935a5c966b09c
         }
+        
+        
     }
 
     //Делегат метода интегрирования
     public delegate void IntgMethod();
     //Делегат подынтегральной функции
     public delegate double Function(double x);
-<<<<<<< HEAD
-
-    
-=======
->>>>>>> 9140619a4df55a62276a051245a935a5c966b09c
 }
