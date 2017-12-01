@@ -1,5 +1,5 @@
 ﻿using System;
-//using System.Collections.Generic;
+using System.Collections.Generic;
 //using System.ComponentModel;
 //using System.Data;
 //using System.Drawing;
@@ -15,6 +15,9 @@ namespace integrate_multithread
         public Form1()
         {
             InitializeComponent();
+            //Параметры по умолчанию
+            cbFunction.SelectedIndex = 0;
+
         }
 
         private void оПрограммеToolStripMenuItem_Click(object sender, EventArgs e)
@@ -25,8 +28,9 @@ namespace integrate_multithread
 
         private void btnClearResults_Click(object sender, EventArgs e)
         {
-            //Очищаем таблицу результатов
+            //Очищаем таблицу результатов и строку состояния
             dgResults.Rows.Clear();
+            StatusBar.Items[0].Text = "";
         }
 
         private void btnSolve_Click(object sender, EventArgs e)
@@ -48,8 +52,56 @@ namespace integrate_multithread
             }
 
             //Если параметры заданы корректно, запускаем решение
-         
-            
+            //Формируем интеграл
+            Integral I = new Integral(cbFunction.SelectedIndex);
+            I.LowerLimit = Convert.ToDouble(tbLowerLimit.Text);
+            I.UpperLimit = Convert.ToDouble(tbUpperLimit.Text);
+            I.Eps = Convert.ToDouble(tbAccuracy.Text);
+            if(rbRectangle.Checked)
+            {
+                I.Method = I.GetMethodDelegate(0);
+            }
+            else if (rbTrapezoidal.Checked)
+            {
+                I.Method = I.GetMethodDelegate(1);
+            }
+            else if (rbSimpson.Checked)
+            {
+                I.Method = I.GetMethodDelegate(1);
+            }
+            //Распределяем по потокам
+            Threader threader = new Threader();
+            int thrcount = Convert.ToInt32(tbThreadsNum.Text);
+            try
+            {
+                threader.Distribute(ref I,thrcount,rbRegular.Checked);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            //Запускаем выполнение
+            threader.StartAll();
+            StatusBar.Items[0].Text = "Все потоки запущены";
+
+            //Завершаем потоки
+            threader.JoinAll();
+            StatusBar.Items[0].Text = "Все потоки завершены";
+            //TODO: сбор общего результата
+            I.TotalValue();
+            //TODO: вывод результатов в таблицу
+            dgResults.Rows.Add();
+            dgResults.Rows[dgResults.RowCount - 1].Cells[0].Value = I.Value;
+            dgResults.Rows[dgResults.RowCount - 1].Cells[1].Value = threader.Threads.Count;
+            dgResults.Rows[dgResults.RowCount - 1].Cells[2].Value = threader.TotalTime.TotalMilliseconds;
+            ////в textbox
+            //for(int i=0; i<I.SubIntegrals.Count;i++)
+            //{
+            //    textBox1.Text += "[" +I.SubIntegrals[i].LowerLimit.ToString()+ ";" + I.SubIntegrals[i].UpperLimit.ToString() + "]" + Environment.NewLine;
+            //}
+            //textBox1.Text += "Число потоков: "+threader.Threads.Count.ToString() +". Время выполнения: "+threader.TotalTime.TotalMilliseconds+" мс" + Environment.NewLine;
+
+
         }
 
         public int Verify()

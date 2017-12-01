@@ -51,13 +51,11 @@
             this.rbTrapezoidal = new System.Windows.Forms.RadioButton();
             this.rbRectangle = new System.Windows.Forms.RadioButton();
             this.dgResults = new System.Windows.Forms.DataGridView();
+            this.StatusBar = new System.Windows.Forms.StatusStrip();
+            this.StatusText = new System.Windows.Forms.ToolStripStatusLabel();
             this.IntegralValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.IntervalNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ThreadNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Time = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Acceleration = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.StatusBar = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1.SuspendLayout();
             this.pnSettings.SuspendLayout();
             this.gbGridType.SuspendLayout();
@@ -151,6 +149,7 @@
             this.tbThreadsNum.Name = "tbThreadsNum";
             this.tbThreadsNum.Size = new System.Drawing.Size(188, 20);
             this.tbThreadsNum.TabIndex = 11;
+            this.tbThreadsNum.Text = "1";
             // 
             // label3
             // 
@@ -167,6 +166,7 @@
             this.tbAccuracy.Name = "tbAccuracy";
             this.tbAccuracy.Size = new System.Drawing.Size(188, 20);
             this.tbAccuracy.TabIndex = 9;
+            this.tbAccuracy.Text = "0,001";
             // 
             // label2
             // 
@@ -223,6 +223,7 @@
             this.tbLowerLimit.Name = "tbLowerLimit";
             this.tbLowerLimit.Size = new System.Drawing.Size(45, 20);
             this.tbLowerLimit.TabIndex = 3;
+            this.tbLowerLimit.Text = "0";
             // 
             // tbUpperLimit
             // 
@@ -230,6 +231,7 @@
             this.tbUpperLimit.Name = "tbUpperLimit";
             this.tbUpperLimit.Size = new System.Drawing.Size(45, 20);
             this.tbUpperLimit.TabIndex = 2;
+            this.tbUpperLimit.Text = "1";
             // 
             // label1
             // 
@@ -293,27 +295,34 @@
             this.dgResults.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgResults.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.IntegralValue,
-            this.IntervalNumber,
             this.ThreadNumber,
-            this.Time,
-            this.Acceleration});
+            this.Time});
             this.dgResults.Location = new System.Drawing.Point(0, 27);
             this.dgResults.Name = "dgResults";
             this.dgResults.ReadOnly = true;
-            this.dgResults.Size = new System.Drawing.Size(557, 440);
+            this.dgResults.Size = new System.Drawing.Size(557, 437);
             this.dgResults.TabIndex = 3;
+            // 
+            // StatusBar
+            // 
+            this.StatusBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.StatusText});
+            this.StatusBar.Location = new System.Drawing.Point(0, 470);
+            this.StatusBar.Name = "StatusBar";
+            this.StatusBar.Size = new System.Drawing.Size(763, 22);
+            this.StatusBar.TabIndex = 4;
+            this.StatusBar.Text = "Строка состояния";
+            // 
+            // StatusText
+            // 
+            this.StatusText.Name = "StatusText";
+            this.StatusText.Size = new System.Drawing.Size(0, 17);
             // 
             // IntegralValue
             // 
             this.IntegralValue.HeaderText = "Значение интеграла";
             this.IntegralValue.Name = "IntegralValue";
             this.IntegralValue.ReadOnly = true;
-            // 
-            // IntervalNumber
-            // 
-            this.IntervalNumber.HeaderText = "Число разбиений";
-            this.IntervalNumber.Name = "IntervalNumber";
-            this.IntervalNumber.ReadOnly = true;
             // 
             // ThreadNumber
             // 
@@ -326,28 +335,6 @@
             this.Time.HeaderText = "Время, мс";
             this.Time.Name = "Time";
             this.Time.ReadOnly = true;
-            // 
-            // Acceleration
-            // 
-            this.Acceleration.HeaderText = "Ускорение";
-            this.Acceleration.Name = "Acceleration";
-            this.Acceleration.ReadOnly = true;
-            // 
-            // StatusBar
-            // 
-            this.StatusBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1});
-            this.StatusBar.Location = new System.Drawing.Point(0, 470);
-            this.StatusBar.Name = "StatusBar";
-            this.StatusBar.Size = new System.Drawing.Size(763, 22);
-            this.StatusBar.TabIndex = 4;
-            this.StatusBar.Text = "Строка состояния";
-            // 
-            // toolStripStatusLabel1
-            // 
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(106, 17);
-            this.toolStripStatusLabel1.Text = "Строка состояния";
             // 
             // Form1
             // 
@@ -398,16 +385,14 @@
         private System.Windows.Forms.RadioButton rbTrapezoidal;
         private System.Windows.Forms.RadioButton rbRectangle;
         private System.Windows.Forms.DataGridView dgResults;
-        private System.Windows.Forms.DataGridViewTextBoxColumn IntegralValue;
-        private System.Windows.Forms.DataGridViewTextBoxColumn IntervalNumber;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ThreadNumber;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Time;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Acceleration;
         private System.Windows.Forms.GroupBox gbGridType;
         private System.Windows.Forms.RadioButton rbIrregular;
         private System.Windows.Forms.RadioButton rbRegular;
         private System.Windows.Forms.StatusStrip StatusBar;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.ToolStripStatusLabel StatusText;
+        private System.Windows.Forms.DataGridViewTextBoxColumn IntegralValue;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ThreadNumber;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Time;
     }
 }
 
