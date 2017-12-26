@@ -1,6 +1,6 @@
 ﻿namespace integrate_multithread
 {
-    partial class Form1
+    partial class MainForm
     {
         /// <summary>
         /// Обязательная переменная конструктора.
@@ -35,7 +35,6 @@
             this.gbGridType = new System.Windows.Forms.GroupBox();
             this.rbIrregular = new System.Windows.Forms.RadioButton();
             this.rbRegular = new System.Windows.Forms.RadioButton();
-            this.tbThreadsNum = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.tbAccuracy = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
@@ -51,17 +50,19 @@
             this.rbTrapezoidal = new System.Windows.Forms.RadioButton();
             this.rbRectangle = new System.Windows.Forms.RadioButton();
             this.dgResults = new System.Windows.Forms.DataGridView();
-            this.StatusBar = new System.Windows.Forms.StatusStrip();
-            this.StatusText = new System.Windows.Forms.ToolStripStatusLabel();
             this.IntegralValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ThreadNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Time = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.StatusBar = new System.Windows.Forms.StatusStrip();
+            this.StatusText = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tbThreadsNum = new System.Windows.Forms.NumericUpDown();
             this.menuStrip1.SuspendLayout();
             this.pnSettings.SuspendLayout();
             this.gbGridType.SuspendLayout();
             this.gbIntMethod.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgResults)).BeginInit();
             this.StatusBar.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tbThreadsNum)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -91,8 +92,8 @@
             // 
             // pnSettings
             // 
-            this.pnSettings.Controls.Add(this.gbGridType);
             this.pnSettings.Controls.Add(this.tbThreadsNum);
+            this.pnSettings.Controls.Add(this.gbGridType);
             this.pnSettings.Controls.Add(this.label3);
             this.pnSettings.Controls.Add(this.tbAccuracy);
             this.pnSettings.Controls.Add(this.label2);
@@ -143,14 +144,6 @@
             this.rbRegular.Text = "Равномерная";
             this.rbRegular.UseVisualStyleBackColor = true;
             // 
-            // tbThreadsNum
-            // 
-            this.tbThreadsNum.Location = new System.Drawing.Point(3, 365);
-            this.tbThreadsNum.Name = "tbThreadsNum";
-            this.tbThreadsNum.Size = new System.Drawing.Size(188, 20);
-            this.tbThreadsNum.TabIndex = 11;
-            this.tbThreadsNum.Text = "1";
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -166,7 +159,7 @@
             this.tbAccuracy.Name = "tbAccuracy";
             this.tbAccuracy.Size = new System.Drawing.Size(188, 20);
             this.tbAccuracy.TabIndex = 9;
-            this.tbAccuracy.Text = "0,001";
+            this.tbAccuracy.Text = "0,00001";
             // 
             // label2
             // 
@@ -202,7 +195,9 @@
             this.cbFunction.FormattingEnabled = true;
             this.cbFunction.Items.AddRange(new object[] {
             "sin(x)",
-            "e^x"});
+            "e^x",
+            "1/(x*e^x)",
+            "1/ln(x)"});
             this.cbFunction.Location = new System.Drawing.Point(3, 25);
             this.cbFunction.Name = "cbFunction";
             this.cbFunction.Size = new System.Drawing.Size(188, 21);
@@ -303,21 +298,6 @@
             this.dgResults.Size = new System.Drawing.Size(557, 437);
             this.dgResults.TabIndex = 3;
             // 
-            // StatusBar
-            // 
-            this.StatusBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.StatusText});
-            this.StatusBar.Location = new System.Drawing.Point(0, 470);
-            this.StatusBar.Name = "StatusBar";
-            this.StatusBar.Size = new System.Drawing.Size(763, 22);
-            this.StatusBar.TabIndex = 4;
-            this.StatusBar.Text = "Строка состояния";
-            // 
-            // StatusText
-            // 
-            this.StatusText.Name = "StatusText";
-            this.StatusText.Size = new System.Drawing.Size(0, 17);
-            // 
             // IntegralValue
             // 
             this.IntegralValue.HeaderText = "Значение интеграла";
@@ -336,7 +316,44 @@
             this.Time.Name = "Time";
             this.Time.ReadOnly = true;
             // 
-            // Form1
+            // StatusBar
+            // 
+            this.StatusBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.StatusText});
+            this.StatusBar.Location = new System.Drawing.Point(0, 470);
+            this.StatusBar.Name = "StatusBar";
+            this.StatusBar.Size = new System.Drawing.Size(763, 22);
+            this.StatusBar.TabIndex = 4;
+            this.StatusBar.Text = "Строка состояния";
+            // 
+            // StatusText
+            // 
+            this.StatusText.Name = "StatusText";
+            this.StatusText.Size = new System.Drawing.Size(0, 17);
+            // 
+            // tbThreadsNum
+            // 
+            this.tbThreadsNum.Location = new System.Drawing.Point(3, 365);
+            this.tbThreadsNum.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.tbThreadsNum.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.tbThreadsNum.Name = "tbThreadsNum";
+            this.tbThreadsNum.Size = new System.Drawing.Size(188, 20);
+            this.tbThreadsNum.TabIndex = 11;
+            this.tbThreadsNum.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -346,7 +363,7 @@
             this.Controls.Add(this.pnSettings);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
-            this.Name = "Form1";
+            this.Name = "MainForm";
             this.Text = "Интегрирование";
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -359,6 +376,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgResults)).EndInit();
             this.StatusBar.ResumeLayout(false);
             this.StatusBar.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tbThreadsNum)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -369,7 +387,6 @@
         private System.Windows.Forms.ToolStripMenuItem справкаToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem оПрограммеToolStripMenuItem;
         private System.Windows.Forms.Panel pnSettings;
-        private System.Windows.Forms.TextBox tbThreadsNum;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox tbAccuracy;
         private System.Windows.Forms.Label label2;
@@ -393,6 +410,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn IntegralValue;
         private System.Windows.Forms.DataGridViewTextBoxColumn ThreadNumber;
         private System.Windows.Forms.DataGridViewTextBoxColumn Time;
+        private System.Windows.Forms.NumericUpDown tbThreadsNum;
     }
 }
 

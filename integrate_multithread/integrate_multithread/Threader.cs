@@ -34,11 +34,27 @@ namespace integrate_multithread
                 //Делим отрезок интегрирования между потоками
                 //SubIntegrals = new List<Integral>();
                 double h = (I.UpperLimit - I.LowerLimit) / threadscount;
+               // double h = (I.UpperLimit - I.LowerLimit) / I.N;
                 for (int i = 0; i < threadscount; i++)
                 { 
                     Integral intg = new Integral(I.LowerLimit + i * h, I.LowerLimit + (i + 1) * h,I.F,I.Eps/threadscount,I.Method);
                     //Изменяем пределы и точность
                     intg.Eps /= threadscount;
+                    if (threadscount > 1)
+                    {
+                        if (intg.LowerLimit + i * h <= I.UpperLimit)
+                        {
+                            intg.N = Math.Round((double)I.N / (double)threadscount);
+                        }
+                        else
+                        {
+                            intg.N = I.N - (i - 1) * I.N;
+                        }
+                    }
+                    else
+                    {
+                        intg.N = I.N;
+                    }
                     intg.LowerLimit = I.LowerLimit + i * h;
                     intg.UpperLimit = I.LowerLimit + (i + 1) * h;
                     //Включаем интеграл в список
