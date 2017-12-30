@@ -16,11 +16,11 @@ namespace integrate_multithread
         //Точность
         public double Eps { get; set; }
         //Число разбиений
-        public double N { get; set; }
+        public int N { get; set; }
         //Метод интегрирования
         public IntgMethod Method { get; set; }
         //Разбиения
-        public List<Integral> SubIntegrals { get; set; }
+       // public List<Integral> SubIntegrals { get; set; }
         //Результаты интегрирования
         public double Value { get; set; }
 
@@ -28,18 +28,18 @@ namespace integrate_multithread
         //Конструкторы
         public Integral()
         {
-            SubIntegrals = new List<Integral>();
+           // SubIntegrals = new List<Integral>();
             N = 8;
         }
         public Integral(int func)
         {
-            SubIntegrals = new List<Integral>();
+            //SubIntegrals = new List<Integral>();
             F = GetFuncDelegate(func);
             N = 8;
         }
         public Integral(double lower, double upper, int func, double eps,IntgMethod method)
         {
-            SubIntegrals = new List<Integral>();
+           // SubIntegrals = new List<Integral>();
             F = GetFuncDelegate(func);
             LowerLimit = lower;
             UpperLimit = upper;
@@ -48,7 +48,7 @@ namespace integrate_multithread
         }
         public Integral(double lower, double upper, Function func, double eps, IntgMethod method)
         {
-            SubIntegrals = new List<Integral>();
+           // SubIntegrals = new List<Integral>();
             F = func;
             LowerLimit = lower;
             UpperLimit = upper;
@@ -106,12 +106,12 @@ namespace integrate_multithread
         }
 
         //Сумма сумма по разбиениям
-        public void TotalValue()
+        public void TotalValue(List<Integral> I)
         {
             Value = 0;
-            foreach(Integral sub in  SubIntegrals)
+            foreach(Integral i in  I/*SubIntegrals*/)
             {
-                Value += sub.Value;
+                Value += i.Value;
             }
         }
 

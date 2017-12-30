@@ -74,9 +74,11 @@ namespace integrate_multithread
                 //Распределяем по потокам
                 Threader threader = new Threader();
                 int thrcount = Convert.ToInt32(/*i*/tbThreadsNum.Text);
+
+                List<Integral> SubIntegrals = new List<Integral>(threader.Threads.Count); //Список подынтегралов
                 try
                 {
-                    threader.Distribute(ref I, thrcount, rbRegular.Checked);
+                    threader.Distribute(I,ref SubIntegrals, thrcount, rbRegular.Checked);
                 }
                 catch (Exception ex)
                 {
@@ -89,9 +91,9 @@ namespace integrate_multithread
                 //Завершаем потоки
                 threader.JoinAll();
                 StatusBar.Items[0].Text = "Все потоки завершены";
-                //TODO: сбор общего результата
-                I.TotalValue();
-                //TODO: вывод результатов в таблицу
+                // сбор общего результата
+                I.TotalValue(SubIntegrals);
+                //вывод результатов в таблицу
                 dgResults.Rows.Add();
                 dgResults.Rows[dgResults.RowCount - 1].Cells[0].Value = I.Value;
                 dgResults.Rows[dgResults.RowCount - 1].Cells[1].Value = threader.Threads.Count;

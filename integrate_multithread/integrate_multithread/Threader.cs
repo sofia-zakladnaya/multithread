@@ -25,8 +25,14 @@ namespace integrate_multithread
 
 
         //Распределение интервалов по потокам
-        public void Distribute(ref Integral I,int threadscount, bool regular)
+        public void Distribute(Integral I,ref List<Integral> SubIntegrals,int threadscount, bool regular)
         {
+            //Число потоков должно быть не меньше 1
+            if (threadscount < 1)
+            {
+                throw new Exception("Неверное число потоков");
+            }
+            //Равномерная сетка
             if (regular)
             {
                 //Инициализируем список потоков
@@ -39,16 +45,17 @@ namespace integrate_multithread
                 { 
                     Integral intg = new Integral(I.LowerLimit + i * h, I.LowerLimit + (i + 1) * h,I.F,I.Eps/threadscount,I.Method);
                     //Изменяем пределы и точность
+                    
                     intg.Eps /= threadscount;
                     if (threadscount > 1)
                     {
                         if (intg.LowerLimit + i * h <= I.UpperLimit)
                         {
-                            intg.N = Math.Round((double)I.N / (double)threadscount);
+                            intg.N = (int)Math.Round((double)I.N /threadscount);
                         }
                         else
                         {
-                            intg.N = I.N - (i - 1) * I.N;
+                            intg.N = I.N - i * (int)Math.Round((double)I.N / threadscount);
                         }
                     }
                     else
@@ -58,13 +65,14 @@ namespace integrate_multithread
                     intg.LowerLimit = I.LowerLimit + i * h;
                     intg.UpperLimit = I.LowerLimit + (i + 1) * h;
                     //Включаем интеграл в список
-                    I.SubIntegrals.Add(intg);
+                    SubIntegrals.Add(intg);
                     //Создаём поток и добавляем в список
-                    ThreadStart solver = new ThreadStart(I.SubIntegrals[i].Solve);
+                    ThreadStart solver = new ThreadStart(SubIntegrals[i].Solve);
                     Thread thread = new Thread(solver);
                     Threads.Add(thread);
                 }
             }
+            //Неравномерная сетка
             else
             {
                 throw new Exception("Неравномерное разбиение в разработке");
