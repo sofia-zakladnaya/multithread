@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 ////using System.Linq;
 ////using System.Text;
-using System.Threading;
+//using System.Threading;
 
 namespace integrate_multithread
 {
@@ -15,6 +15,8 @@ namespace integrate_multithread
         public double UpperLimit { get; set; }
         //Точность
         public double Eps { get; set; }
+        //Число разбиений
+        public double N { get; set; }
         //Метод интегрирования
         public IntgMethod Method { get; set; }
         //Разбиения
@@ -27,11 +29,13 @@ namespace integrate_multithread
         public Integral()
         {
             SubIntegrals = new List<Integral>();
+            N = 8;
         }
         public Integral(int func)
         {
             SubIntegrals = new List<Integral>();
             F = GetFuncDelegate(func);
+            N = 8;
         }
         public Integral(double lower, double upper, int func, double eps,IntgMethod method)
         {
@@ -54,10 +58,51 @@ namespace integrate_multithread
         //Вычисление значения интеграла
         public void Solve()
         {
-            Value = 22;
-            Thread.Sleep(2000);
+            // Value = Method(LowerLimit,UpperLimit);
+            //Value = 22;
+            //Thread.Sleep(2000);
             //TODO
-            
+           // int N = 10;
+            double S = 0;
+            double h = (UpperLimit - LowerLimit) / N;
+            for (int i = 0; i < N; i++)
+            {
+                //метод трапеций
+                //S += ((F(x(i, h)) + F(x(i + 1, h))) / 2) * (x(i + 1, h) - x(i, h));
+                S += F((x(i, h) + x(i + 1, h)) / 2) * (x(i + 1, h) - x(i, h)); //метод прямоугольников
+            }
+            Value = S;
+            S = 0;
+            N *= 2;
+            h = (UpperLimit - LowerLimit) / N;
+            for (int i = 0; i < N; i++)
+            {
+                //метод трапеций
+                //S += ((F(x(i, h)) + F(x(i + 1, h))) / 2) * (x(i + 1, h) - x(i, h));
+                S += F((x(i, h) + x(i + 1, h)) / 2) * (x(i + 1, h) - x(i, h)); //метод прямоугольников
+            }
+
+            while (Math.Abs(Value - S) > Eps)
+            {
+                Value = S;
+                S = 0;
+                N *= 2;
+                h = (UpperLimit - LowerLimit) / N;
+                for (int i = 0; i < N; i++)
+                {
+                    //метод трапеций
+                    //S += ((F(x(i, h)) + F(x(i + 1, h))) / 2) * (x(i + 1, h) - x(i, h));
+                    S += F((x(i, h) + x(i + 1, h)) / 2) * (x(i + 1, h) - x(i, h)); //метод прямоугольников
+                }
+            }
+
+        }
+
+
+        //i-й узел решётки
+        private double x(int i,double h)
+        {
+            return LowerLimit + i * h;
         }
 
         //Сумма сумма по разбиениям
@@ -80,9 +125,21 @@ namespace integrate_multithread
                     {
                         return Math.Sin;
                     }
-                default:
+                case 1:
                     {
                         return Math.Exp;
+                    }
+                case 2:
+                    {
+                        return F1;
+                    }
+                case 3:
+                    {
+                        return F2;
+                    }
+                default:
+                    {
+                        return Math.Abs;
                     }
             }
         }
@@ -110,25 +167,69 @@ namespace integrate_multithread
 
         //Методы интегрирования
         //Метод прямоугольников
-        private void Rectangle()
+        public double Rectangle(double a, double b,double e)
         {
             throw new Exception("Метод нереализован");
+            // int N = 10;
+            // double S1 = 0;
+            // double S2 = 0;
+            // double h = (b - a) / N;
+            // for (int i = 0; i < N; i++)
+            // {
+            //     double f = F((x(i, h,a) + x(i + 1, h,a)) / 2);
+            //     double dx = (x(i + 1, h,a) - x(i, h,a));
+            //     S1 +=  (f*dx);
+            // }
+            // //Value = S;
+            //// S = 0;
+            // N *= 2;
+            // h = (b - a) / N;
+            // for (int i = 0; i < N; i++)
+            // {
+            //     S2 += F((x(i, h,a) + x(i + 1, h,a)) / 2) * (x(i + 1, h,a) - x(i, h,a));
+            // }
+
+            // while (Math.Abs(S1 - S2) > e)
+            // {
+            //     S1 = S2;
+            //     S2 = 0;
+            //     N *= 2;
+            //     h = (b - a) / N;
+            //     for (int i = 0; i < N; i++)
+            //     {
+            //         S2 += F((x(i, h,a) + x(i + 1, h,a)) / 2) * (x(i + 1, h,a) - x(i, h,a));
+            //     }
+            // }
+
+            // return S2;
         }
         
         //Метод трапеций
-        private void Trapezoid()
+        public double Trapezoid(double a, double b, double e)
         {
             throw new Exception("Метод нереализован");
         }
         //Метод Симпсона
-        private void Simpson()
+        public double Simpson(double a, double b, double e)
         {
             throw new Exception("Метод нереализован");
+        }
+
+        //Пример1
+        public double F1(double x)
+        {
+            return 1 / (x * Math.Exp(x));
+        }
+
+        //Пример2
+        public double F2(double x)
+        {
+            return 1 / Math.Log(x);
         }
     }
 
     //Делегат метода интегрирования
-    public delegate void IntgMethod();
+    public delegate double IntgMethod(double a, double b,double e);
     //Делегат подынтегральной функции
     public delegate double Function(double x);
 
