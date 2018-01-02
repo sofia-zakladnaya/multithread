@@ -32,6 +32,7 @@
             this.справкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.оПрограммеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pnSettings = new System.Windows.Forms.Panel();
+            this.tbThreadsNum = new System.Windows.Forms.NumericUpDown();
             this.gbGridType = new System.Windows.Forms.GroupBox();
             this.rbIrregular = new System.Windows.Forms.RadioButton();
             this.rbRegular = new System.Windows.Forms.RadioButton();
@@ -50,19 +51,19 @@
             this.rbTrapezoidal = new System.Windows.Forms.RadioButton();
             this.rbRectangle = new System.Windows.Forms.RadioButton();
             this.dgResults = new System.Windows.Forms.DataGridView();
-            this.IntegralValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ThreadNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Time = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.StatusBar = new System.Windows.Forms.StatusStrip();
             this.StatusText = new System.Windows.Forms.ToolStripStatusLabel();
-            this.tbThreadsNum = new System.Windows.Forms.NumericUpDown();
+            this.ThreadNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Time = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.IntegralValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Subs = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.menuStrip1.SuspendLayout();
             this.pnSettings.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tbThreadsNum)).BeginInit();
             this.gbGridType.SuspendLayout();
             this.gbIntMethod.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgResults)).BeginInit();
             this.StatusBar.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tbThreadsNum)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -109,6 +110,28 @@
             this.pnSettings.Name = "pnSettings";
             this.pnSettings.Size = new System.Drawing.Size(200, 440);
             this.pnSettings.TabIndex = 2;
+            // 
+            // tbThreadsNum
+            // 
+            this.tbThreadsNum.Location = new System.Drawing.Point(3, 365);
+            this.tbThreadsNum.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.tbThreadsNum.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.tbThreadsNum.Name = "tbThreadsNum";
+            this.tbThreadsNum.Size = new System.Drawing.Size(188, 20);
+            this.tbThreadsNum.TabIndex = 11;
+            this.tbThreadsNum.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // gbGridType
             // 
@@ -287,34 +310,18 @@
             // 
             this.dgResults.AllowUserToAddRows = false;
             this.dgResults.AllowUserToDeleteRows = false;
+            this.dgResults.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.DisplayedCells;
             this.dgResults.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgResults.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.IntegralValue,
             this.ThreadNumber,
-            this.Time});
+            this.Time,
+            this.IntegralValue,
+            this.Subs});
             this.dgResults.Location = new System.Drawing.Point(0, 27);
             this.dgResults.Name = "dgResults";
             this.dgResults.ReadOnly = true;
             this.dgResults.Size = new System.Drawing.Size(557, 437);
             this.dgResults.TabIndex = 3;
-            // 
-            // IntegralValue
-            // 
-            this.IntegralValue.HeaderText = "Значение интеграла";
-            this.IntegralValue.Name = "IntegralValue";
-            this.IntegralValue.ReadOnly = true;
-            // 
-            // ThreadNumber
-            // 
-            this.ThreadNumber.HeaderText = "Число потоков";
-            this.ThreadNumber.Name = "ThreadNumber";
-            this.ThreadNumber.ReadOnly = true;
-            // 
-            // Time
-            // 
-            this.Time.HeaderText = "Время, мс";
-            this.Time.Name = "Time";
-            this.Time.ReadOnly = true;
             // 
             // StatusBar
             // 
@@ -331,27 +338,33 @@
             this.StatusText.Name = "StatusText";
             this.StatusText.Size = new System.Drawing.Size(0, 17);
             // 
-            // tbThreadsNum
+            // ThreadNumber
             // 
-            this.tbThreadsNum.Location = new System.Drawing.Point(3, 365);
-            this.tbThreadsNum.Maximum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.tbThreadsNum.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.tbThreadsNum.Name = "tbThreadsNum";
-            this.tbThreadsNum.Size = new System.Drawing.Size(188, 20);
-            this.tbThreadsNum.TabIndex = 11;
-            this.tbThreadsNum.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+            this.ThreadNumber.HeaderText = "Число потоков";
+            this.ThreadNumber.Name = "ThreadNumber";
+            this.ThreadNumber.ReadOnly = true;
+            this.ThreadNumber.Width = 99;
+            // 
+            // Time
+            // 
+            this.Time.HeaderText = "Время, мс";
+            this.Time.Name = "Time";
+            this.Time.ReadOnly = true;
+            this.Time.Width = 78;
+            // 
+            // IntegralValue
+            // 
+            this.IntegralValue.HeaderText = "Значение интеграла";
+            this.IntegralValue.Name = "IntegralValue";
+            this.IntegralValue.ReadOnly = true;
+            this.IntegralValue.Width = 123;
+            // 
+            // Subs
+            // 
+            this.Subs.HeaderText = "Подынтегралы";
+            this.Subs.Name = "Subs";
+            this.Subs.ReadOnly = true;
+            this.Subs.Width = 108;
             // 
             // MainForm
             // 
@@ -369,6 +382,7 @@
             this.menuStrip1.PerformLayout();
             this.pnSettings.ResumeLayout(false);
             this.pnSettings.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tbThreadsNum)).EndInit();
             this.gbGridType.ResumeLayout(false);
             this.gbGridType.PerformLayout();
             this.gbIntMethod.ResumeLayout(false);
@@ -376,7 +390,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgResults)).EndInit();
             this.StatusBar.ResumeLayout(false);
             this.StatusBar.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.tbThreadsNum)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -407,10 +420,11 @@
         private System.Windows.Forms.RadioButton rbRegular;
         private System.Windows.Forms.StatusStrip StatusBar;
         private System.Windows.Forms.ToolStripStatusLabel StatusText;
-        private System.Windows.Forms.DataGridViewTextBoxColumn IntegralValue;
+        private System.Windows.Forms.NumericUpDown tbThreadsNum;
         private System.Windows.Forms.DataGridViewTextBoxColumn ThreadNumber;
         private System.Windows.Forms.DataGridViewTextBoxColumn Time;
-        private System.Windows.Forms.NumericUpDown tbThreadsNum;
+        private System.Windows.Forms.DataGridViewTextBoxColumn IntegralValue;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Subs;
     }
 }
 

@@ -16,7 +16,7 @@ namespace integrate_multithread
         {
             InitializeComponent();
             //Параметры по умолчанию
-            cbFunction.SelectedIndex = 3;
+            cbFunction.SelectedIndex = 1;
 
         }
 
@@ -55,49 +55,65 @@ namespace integrate_multithread
             //Формируем интеграл
             //for (int i = 1; i <= 10; i++)
             //{
-                Integral I = new Integral(cbFunction.SelectedIndex);
-                I.LowerLimit = Convert.ToDouble(tbLowerLimit.Text);
-                I.UpperLimit = Convert.ToDouble(tbUpperLimit.Text);
-                I.Eps = Convert.ToDouble(tbAccuracy.Text);
-                if (rbRectangle.Checked)
-                {
-                    I.Method = I.GetMethodDelegate(0);
-                }
-                else if (rbTrapezoidal.Checked)
-                {
-                    I.Method = I.GetMethodDelegate(1);
-                }
-                else if (rbSimpson.Checked)
-                {
-                    I.Method = I.GetMethodDelegate(1);
-                }
-                //Распределяем по потокам
-                Threader threader = new Threader();
-                int thrcount = Convert.ToInt32(/*i*/tbThreadsNum.Text);
+            int method = -1;
+            if (rbRectangle.Checked)
+            {
+                method = 0;
+            }
+            else if (rbTrapezoidal.Checked)
+            {
+                method = 1;
+            }
+            else if (rbSimpson.Checked)
+            {
+                method = 2;
+            }
+            if(method<0)
+            {
+                return;
+            }
+            Integral I = new Integral(
+                Convert.ToDouble(tbLowerLimit.Text), 
+                Convert.ToDouble(tbUpperLimit.Text), 
+                cbFunction.SelectedIndex, 
+                Convert.ToDouble(tbAccuracy.Text), method);
+                //I.LowerLimit = Convert.ToDouble(tbLowerLimit.Text);
+                //I.UpperLimit = Convert.ToDouble(tbUpperLimit.Text);
+                //I.Eps = Convert.ToDouble(tbAccuracy.Text);
+               
+            //Распределяем по потокам
+            Threader threader = new Threader();
+            int thrcount = Convert.ToInt32(/*i*/tbThreadsNum.Text);
 
-                List<Integral> SubIntegrals = new List<Integral>(threader.Threads.Count); //Список подынтегралов
-                try
-                {
-                    threader.Distribute(I,ref SubIntegrals, thrcount, rbRegular.Checked);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-                //Запускаем выполнение
-                threader.StartAll();
-                StatusBar.Items[0].Text = "Все потоки запущены";
+            List<Integral> SubIntegrals = new List<Integral>(threader.Threads.Count); //Список подынтегралов
+            try
+            {
+                threader.Distribute(I,ref SubIntegrals, thrcount, rbRegular.Checked);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            //Запускаем выполнение
+            threader.StartAll();
+            StatusBar.Items[0].Text = "Все потоки запущены";
 
-                //Завершаем потоки
-                threader.JoinAll();
-                StatusBar.Items[0].Text = "Все потоки завершены";
-                // сбор общего результата
-                I.TotalValue(SubIntegrals);
-                //вывод результатов в таблицу
-                dgResults.Rows.Add();
-                dgResults.Rows[dgResults.RowCount - 1].Cells[0].Value = I.Value;
-                dgResults.Rows[dgResults.RowCount - 1].Cells[1].Value = threader.Threads.Count;
-                dgResults.Rows[dgResults.RowCount - 1].Cells[2].Value = threader.TotalTime.TotalMilliseconds;
+            //Завершаем потоки
+            threader.JoinAll();
+            StatusBar.Items[0].Text = "Все потоки завершены";
+            // сбор общего результата
+            I.TotalValue(SubIntegrals);
+            //вывод результатов в таблицу
+            dgResults.Rows.Add();
+            dgResults.Rows[dgResults.RowCount - 1].Cells[2].Value = I.Value;
+            dgResults.Rows[dgResults.RowCount - 1].Cells[0].Value = threader.Threads.Count;
+            dgResults.Rows[dgResults.RowCount - 1].Cells[1].Value = threader.TotalTime.TotalMilliseconds;
+            dgResults.Rows[dgResults.RowCount - 1].Cells[3].Value = "";
+            foreach (Integral i in SubIntegrals)
+            {
+                dgResults.Rows[dgResults.RowCount - 1].Cells[3].Value += "("+i.LowerLimit.ToString() + "; "+ i.UpperLimit.ToString()+") ";
+            }
+
             //}
             ////в textbox
             //for(int i=0; i<I.SubIntegrals.Count;i++)
