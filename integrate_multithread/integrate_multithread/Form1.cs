@@ -16,7 +16,7 @@ namespace integrate_multithread
         {
             InitializeComponent();
             //Параметры по умолчанию
-            cbFunction.SelectedIndex = 1;
+            cbFunction.SelectedIndex = 2;
 
         }
 
@@ -108,11 +108,11 @@ namespace integrate_multithread
             dgResults.Rows[dgResults.RowCount - 1].Cells[2].Value = I.Value;
             dgResults.Rows[dgResults.RowCount - 1].Cells[0].Value = threader.Threads.Count;
             dgResults.Rows[dgResults.RowCount - 1].Cells[1].Value = threader.TotalTime.TotalMilliseconds;
-            dgResults.Rows[dgResults.RowCount - 1].Cells[3].Value = "";
-            foreach (Integral i in SubIntegrals)
-            {
-                dgResults.Rows[dgResults.RowCount - 1].Cells[3].Value += "("+i.LowerLimit.ToString() + "; "+ i.UpperLimit.ToString()+") ";
-            }
+           // dgResults.Rows[dgResults.RowCount - 1].Cells[3].Value = "";
+            //foreach (Integral i in SubIntegrals)
+            //{
+            //    dgResults.Rows[dgResults.RowCount - 1].Cells[3].Value += "("+i.LowerLimit.ToString() + "; "+ i.UpperLimit.ToString()+") ";
+            //}
 
             //}
             ////в textbox

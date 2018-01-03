@@ -56,7 +56,6 @@
             this.ThreadNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Time = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.IntegralValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Subs = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.menuStrip1.SuspendLayout();
             this.pnSettings.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbThreadsNum)).BeginInit();
@@ -108,17 +107,12 @@
             this.pnSettings.Controls.Add(this.gbIntMethod);
             this.pnSettings.Location = new System.Drawing.Point(563, 27);
             this.pnSettings.Name = "pnSettings";
-            this.pnSettings.Size = new System.Drawing.Size(200, 440);
+            this.pnSettings.Size = new System.Drawing.Size(200, 478);
             this.pnSettings.TabIndex = 2;
             // 
             // tbThreadsNum
             // 
             this.tbThreadsNum.Location = new System.Drawing.Point(3, 365);
-            this.tbThreadsNum.Maximum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
             this.tbThreadsNum.Minimum = new decimal(new int[] {
             1,
             0,
@@ -142,12 +136,11 @@
             this.gbGridType.Size = new System.Drawing.Size(188, 66);
             this.gbGridType.TabIndex = 3;
             this.gbGridType.TabStop = false;
-            this.gbGridType.Text = "Разбиение";
+            this.gbGridType.Text = "Сетка";
             // 
             // rbIrregular
             // 
             this.rbIrregular.AutoSize = true;
-            this.rbIrregular.Enabled = false;
             this.rbIrregular.Location = new System.Drawing.Point(6, 42);
             this.rbIrregular.Name = "rbIrregular";
             this.rbIrregular.Size = new System.Drawing.Size(107, 17);
@@ -241,7 +234,7 @@
             this.tbLowerLimit.Name = "tbLowerLimit";
             this.tbLowerLimit.Size = new System.Drawing.Size(45, 20);
             this.tbLowerLimit.TabIndex = 3;
-            this.tbLowerLimit.Text = "0";
+            this.tbLowerLimit.Text = "0,000001";
             // 
             // tbUpperLimit
             // 
@@ -249,7 +242,7 @@
             this.tbUpperLimit.Name = "tbUpperLimit";
             this.tbUpperLimit.Size = new System.Drawing.Size(45, 20);
             this.tbUpperLimit.TabIndex = 2;
-            this.tbUpperLimit.Text = "1";
+            this.tbUpperLimit.Text = "10";
             // 
             // label1
             // 
@@ -275,7 +268,6 @@
             // rbSimpson
             // 
             this.rbSimpson.AutoSize = true;
-            this.rbSimpson.Enabled = false;
             this.rbSimpson.Location = new System.Drawing.Point(6, 65);
             this.rbSimpson.Name = "rbSimpson";
             this.rbSimpson.Size = new System.Drawing.Size(76, 17);
@@ -286,7 +278,6 @@
             // rbTrapezoidal
             // 
             this.rbTrapezoidal.AutoSize = true;
-            this.rbTrapezoidal.Enabled = false;
             this.rbTrapezoidal.Location = new System.Drawing.Point(6, 42);
             this.rbTrapezoidal.Name = "rbTrapezoidal";
             this.rbTrapezoidal.Size = new System.Drawing.Size(74, 17);
@@ -315,19 +306,18 @@
             this.dgResults.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ThreadNumber,
             this.Time,
-            this.IntegralValue,
-            this.Subs});
+            this.IntegralValue});
             this.dgResults.Location = new System.Drawing.Point(0, 27);
             this.dgResults.Name = "dgResults";
             this.dgResults.ReadOnly = true;
-            this.dgResults.Size = new System.Drawing.Size(557, 437);
+            this.dgResults.Size = new System.Drawing.Size(557, 478);
             this.dgResults.TabIndex = 3;
             // 
             // StatusBar
             // 
             this.StatusBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.StatusText});
-            this.StatusBar.Location = new System.Drawing.Point(0, 470);
+            this.StatusBar.Location = new System.Drawing.Point(0, 508);
             this.StatusBar.Name = "StatusBar";
             this.StatusBar.Size = new System.Drawing.Size(763, 22);
             this.StatusBar.TabIndex = 4;
@@ -359,18 +349,11 @@
             this.IntegralValue.ReadOnly = true;
             this.IntegralValue.Width = 123;
             // 
-            // Subs
-            // 
-            this.Subs.HeaderText = "Подынтегралы";
-            this.Subs.Name = "Subs";
-            this.Subs.ReadOnly = true;
-            this.Subs.Width = 108;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(763, 492);
+            this.ClientSize = new System.Drawing.Size(763, 530);
             this.Controls.Add(this.StatusBar);
             this.Controls.Add(this.dgResults);
             this.Controls.Add(this.pnSettings);
@@ -424,7 +407,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ThreadNumber;
         private System.Windows.Forms.DataGridViewTextBoxColumn Time;
         private System.Windows.Forms.DataGridViewTextBoxColumn IntegralValue;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Subs;
     }
 }
 

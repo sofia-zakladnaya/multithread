@@ -189,7 +189,7 @@ namespace integrate_multithread
 
         //Методы интегрирования
         //Метод прямоугольников
-        private double Rectangle(double a, double b, double n)
+        private double Rectangle(double a, double b, int n)
         {
             //throw new Exception("Метод нереализован");
             double S = 0; //результат
@@ -206,12 +206,22 @@ namespace integrate_multithread
         }
         
         //Метод трапеций
-        private double Trapezoid(double a, double b, double n)
+        private double Trapezoid(double a, double b, int n)
         {
-            throw new Exception("Метод нереализован");
+            //throw new Exception("Метод нереализован");
+            double S = 0; //результат
+            double h = (b - a) / n; //шаг
+            S = (F(x(a,0,h))+ F(x(a, n, h))) / 2;
+            for (int i = 1; i < n; i++)
+            {
+                S += F(x(a, i, h));
+            }
+
+            S *= h;
+            return S;
         }
         //Метод Симпсона
-        private double Simpson(double a, double b, double n)
+        private double Simpson(double a, double b, int n)
         {
             throw new Exception("Метод нереализован");
         }
@@ -229,7 +239,7 @@ namespace integrate_multithread
         }
 
         //Делегат метода интегрирования
-        public delegate double IntgMethod(double a, double b, double n);
+        public delegate double IntgMethod(double a, double b, int n);
         //Делегат подынтегральной функции
         public delegate double Function(double x);
     }
