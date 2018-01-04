@@ -60,7 +60,29 @@ namespace integrate_multithread
             //Неравномерная сетка
             else
             {
-                throw new Exception("Неравномерное разбиение в разработке");
+                //throw new Exception("Неравномерное разбиение в разработке");
+                //Инициализируем список потоков
+                Threads = new List<Thread>();
+                //Делим отрезок интегрирования сначала поровну между потоками
+                double h = (I.UpperLimit - I.LowerLimit) / threadscount;
+                for (int i = 0; i < threadscount; i++)
+                {
+                    Integral intg = new Integral(I.LowerLimit + i * h, I.LowerLimit + (i + 1) * h, I.F, I.Eps / threadscount, I.Method);
+                    //Включаем интеграл в список
+                    SubIntegrals.Add(intg);
+                }
+
+                //Корректируем разбиение
+                double K0 = 1; //параметр корректировки разбиения
+                I.CorrectGrid(ref SubIntegrals,K0);
+
+                //Создаём потоки
+                foreach(Integral sub in SubIntegrals)
+                {
+                    ThreadStart solver = new ThreadStart(sub.Solve);
+                    Thread thread = new Thread(solver);
+                    Threads.Add(thread);
+                }
             }
         }
 

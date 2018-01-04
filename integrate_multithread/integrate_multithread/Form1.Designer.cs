@@ -51,11 +51,11 @@
             this.rbTrapezoidal = new System.Windows.Forms.RadioButton();
             this.rbRectangle = new System.Windows.Forms.RadioButton();
             this.dgResults = new System.Windows.Forms.DataGridView();
-            this.StatusBar = new System.Windows.Forms.StatusStrip();
-            this.StatusText = new System.Windows.Forms.ToolStripStatusLabel();
             this.ThreadNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Time = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.IntegralValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.StatusBar = new System.Windows.Forms.StatusStrip();
+            this.StatusText = new System.Windows.Forms.ToolStripStatusLabel();
             this.menuStrip1.SuspendLayout();
             this.pnSettings.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbThreadsNum)).BeginInit();
@@ -268,6 +268,7 @@
             // rbSimpson
             // 
             this.rbSimpson.AutoSize = true;
+            this.rbSimpson.Enabled = false;
             this.rbSimpson.Location = new System.Drawing.Point(6, 65);
             this.rbSimpson.Name = "rbSimpson";
             this.rbSimpson.Size = new System.Drawing.Size(76, 17);
@@ -313,21 +314,6 @@
             this.dgResults.Size = new System.Drawing.Size(557, 478);
             this.dgResults.TabIndex = 3;
             // 
-            // StatusBar
-            // 
-            this.StatusBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.StatusText});
-            this.StatusBar.Location = new System.Drawing.Point(0, 508);
-            this.StatusBar.Name = "StatusBar";
-            this.StatusBar.Size = new System.Drawing.Size(763, 22);
-            this.StatusBar.TabIndex = 4;
-            this.StatusBar.Text = "Строка состояния";
-            // 
-            // StatusText
-            // 
-            this.StatusText.Name = "StatusText";
-            this.StatusText.Size = new System.Drawing.Size(0, 17);
-            // 
             // ThreadNumber
             // 
             this.ThreadNumber.HeaderText = "Число потоков";
@@ -348,6 +334,21 @@
             this.IntegralValue.Name = "IntegralValue";
             this.IntegralValue.ReadOnly = true;
             this.IntegralValue.Width = 123;
+            // 
+            // StatusBar
+            // 
+            this.StatusBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.StatusText});
+            this.StatusBar.Location = new System.Drawing.Point(0, 508);
+            this.StatusBar.Name = "StatusBar";
+            this.StatusBar.Size = new System.Drawing.Size(763, 22);
+            this.StatusBar.TabIndex = 4;
+            this.StatusBar.Text = "Строка состояния";
+            // 
+            // StatusText
+            // 
+            this.StatusText.Name = "StatusText";
+            this.StatusText.Size = new System.Drawing.Size(0, 17);
             // 
             // MainForm
             // 

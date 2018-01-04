@@ -242,6 +242,47 @@ namespace integrate_multithread
         public delegate double IntgMethod(double a, double b, int n);
         //Делегат подынтегральной функции
         public delegate double Function(double x);
+
+        //Исправление разбиения
+        public void CorrectGrid(ref List<Integral> Subs, double K0)
+        {
+            //Ищем отрезки с максимальной и минимальной производной(модуль)
+            double maxTg = ATg(Subs[0].LowerLimit, Subs[0].UpperLimit);
+            double minTg = ATg(Subs[0].LowerLimit, Subs[0].UpperLimit);
+            int imax = 0;
+            int imin = 0;
+            for(int i=1;i<Subs.Count;i++)
+            {
+                double atg = ATg(Subs[i].LowerLimit, Subs[i].UpperLimit);
+                if (atg > maxTg)
+                {
+                    maxTg = atg;
+                    imax = i;
+                }
+                else if (atg < minTg)
+                {
+                    minTg = atg;
+                    imin = i;
+                }
+            }
+            /*Если отношение К максимума к минимуму больше К0, сжимаем отрезок с максимальной производной в К раз в сторону 
+большего значения функции(по модулю), остальное пытаемся разбить поровну между остальными потоками*/
+            double K = maxTg / minTg;
+            if(K > K0)
+            {
+
+                //Если отрезок с максимумом с краю, то разбиваем остальную часть поровну
+                /*Если слева от сжатого отрезка помещается положительное число отрезков(как поровну), то разбиваем эту часть, 
+                 округляя число отрезков в меньшую сторону. Часть справа разбиваем на оставшееся число отрезков*/
+            }
+
+        }
+
+        //Оценка производной(модуль тангенса угла наклона прямой)
+        private double ATg(double a, double b)
+        {
+            return Math.Abs((F(b) - F(a)) / (b - a));
+        }
     }
 
     
