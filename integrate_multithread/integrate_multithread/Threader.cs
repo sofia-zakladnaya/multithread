@@ -14,6 +14,8 @@ namespace integrate_multithread
         public TimeSpan TotalTime { get { return FinishTime - StartTime; } }
         private DateTime StartTime;
         private DateTime FinishTime;
+        //параметр для корректировки разбиения
+        public double K { get; set; }
 
 
         public Threader()
@@ -23,6 +25,13 @@ namespace integrate_multithread
             FinishTime = DateTime.Now;
         }
 
+        public Threader(double k)
+        {
+            Threads = new List<Thread>();
+            StartTime = DateTime.Now;
+            FinishTime = DateTime.Now;
+            K = k;
+        }
 
         //Распределение интервалов по потокам
         public void Distribute(Integral I,ref List<Integral> SubIntegrals,int threadscount, bool regular)
@@ -73,9 +82,11 @@ namespace integrate_multithread
                 }
 
                 //Корректируем разбиение
-                double K0 = 1; //параметр корректировки разбиения
-                I.CorrectGrid(ref SubIntegrals,K0);
-
+                if (threadscount > 1)
+                {
+                    //double K0 = 1000000; //параметр корректировки разбиения
+                    I.CorrectGrid(ref SubIntegrals, K);
+                }
                 //Создаём потоки
                 foreach(Integral sub in SubIntegrals)
                 {

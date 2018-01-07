@@ -32,6 +32,8 @@
             this.справкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.оПрограммеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pnSettings = new System.Windows.Forms.Panel();
+            this.label4 = new System.Windows.Forms.Label();
+            this.tbCorrection = new System.Windows.Forms.TextBox();
             this.tbThreadsNum = new System.Windows.Forms.NumericUpDown();
             this.gbGridType = new System.Windows.Forms.GroupBox();
             this.rbIrregular = new System.Windows.Forms.RadioButton();
@@ -92,6 +94,8 @@
             // 
             // pnSettings
             // 
+            this.pnSettings.Controls.Add(this.label4);
+            this.pnSettings.Controls.Add(this.tbCorrection);
             this.pnSettings.Controls.Add(this.tbThreadsNum);
             this.pnSettings.Controls.Add(this.gbGridType);
             this.pnSettings.Controls.Add(this.label3);
@@ -110,9 +114,26 @@
             this.pnSettings.Size = new System.Drawing.Size(200, 478);
             this.pnSettings.TabIndex = 2;
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(6, 383);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(138, 13);
+            this.label4.TabIndex = 13;
+            this.label4.Text = "Параметр корректировки";
+            // 
+            // tbCorrection
+            // 
+            this.tbCorrection.Location = new System.Drawing.Point(3, 399);
+            this.tbCorrection.Name = "tbCorrection";
+            this.tbCorrection.Size = new System.Drawing.Size(188, 20);
+            this.tbCorrection.TabIndex = 12;
+            this.tbCorrection.Text = "10";
+            // 
             // tbThreadsNum
             // 
-            this.tbThreadsNum.Location = new System.Drawing.Point(3, 365);
+            this.tbThreadsNum.Location = new System.Drawing.Point(3, 347);
             this.tbThreadsNum.Minimum = new decimal(new int[] {
             1,
             0,
@@ -141,29 +162,29 @@
             // rbIrregular
             // 
             this.rbIrregular.AutoSize = true;
+            this.rbIrregular.Checked = true;
             this.rbIrregular.Location = new System.Drawing.Point(6, 42);
             this.rbIrregular.Name = "rbIrregular";
             this.rbIrregular.Size = new System.Drawing.Size(107, 17);
             this.rbIrregular.TabIndex = 1;
+            this.rbIrregular.TabStop = true;
             this.rbIrregular.Text = "Неравномерная";
             this.rbIrregular.UseVisualStyleBackColor = true;
             // 
             // rbRegular
             // 
             this.rbRegular.AutoSize = true;
-            this.rbRegular.Checked = true;
             this.rbRegular.Location = new System.Drawing.Point(6, 19);
             this.rbRegular.Name = "rbRegular";
             this.rbRegular.Size = new System.Drawing.Size(94, 17);
             this.rbRegular.TabIndex = 0;
-            this.rbRegular.TabStop = true;
             this.rbRegular.Text = "Равномерная";
             this.rbRegular.UseVisualStyleBackColor = true;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 349);
+            this.label3.Location = new System.Drawing.Point(6, 331);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(83, 13);
             this.label3.TabIndex = 10;
@@ -171,7 +192,7 @@
             // 
             // tbAccuracy
             // 
-            this.tbAccuracy.Location = new System.Drawing.Point(3, 315);
+            this.tbAccuracy.Location = new System.Drawing.Point(3, 297);
             this.tbAccuracy.Name = "tbAccuracy";
             this.tbAccuracy.Size = new System.Drawing.Size(188, 20);
             this.tbAccuracy.TabIndex = 9;
@@ -180,7 +201,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 299);
+            this.label2.Location = new System.Drawing.Point(6, 281);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(54, 13);
             this.label2.TabIndex = 8;
@@ -188,7 +209,7 @@
             // 
             // btnClearResults
             // 
-            this.btnClearResults.Location = new System.Drawing.Point(116, 409);
+            this.btnClearResults.Location = new System.Drawing.Point(116, 447);
             this.btnClearResults.Name = "btnClearResults";
             this.btnClearResults.Size = new System.Drawing.Size(75, 28);
             this.btnClearResults.TabIndex = 7;
@@ -198,7 +219,7 @@
             // 
             // btnSolve
             // 
-            this.btnSolve.Location = new System.Drawing.Point(3, 409);
+            this.btnSolve.Location = new System.Drawing.Point(3, 447);
             this.btnSolve.Name = "btnSolve";
             this.btnSolve.Size = new System.Drawing.Size(75, 28);
             this.btnSolve.TabIndex = 6;
@@ -213,7 +234,8 @@
             "sin(x)",
             "e^x",
             "1/(x*e^x)",
-            "1/ln(x)"});
+            "1/ln(x)",
+            "gauss density"});
             this.cbFunction.Location = new System.Drawing.Point(3, 25);
             this.cbFunction.Name = "cbFunction";
             this.cbFunction.Size = new System.Drawing.Size(188, 21);
@@ -408,6 +430,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ThreadNumber;
         private System.Windows.Forms.DataGridViewTextBoxColumn Time;
         private System.Windows.Forms.DataGridViewTextBoxColumn IntegralValue;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox tbCorrection;
     }
 }
 

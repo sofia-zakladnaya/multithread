@@ -159,6 +159,10 @@ namespace integrate_multithread
                     {
                         return F2;
                     }
+                case 4:
+                    {
+                        return F3;
+                    }
                 default:
                     {
                         return Math.Abs;
@@ -238,6 +242,12 @@ namespace integrate_multithread
             return 1 / Math.Log(x);
         }
 
+        //Пример 3 (плотность нормального распределения с параметрами 0; 0.05)
+        private double F3(double x)
+        {
+            return 636619.772 * Math.Exp(-200000000*x*x);
+        }
+
         //Делегат метода интегрирования
         public delegate double IntgMethod(double a, double b, int n);
         //Делегат подынтегральной функции
@@ -247,42 +257,84 @@ namespace integrate_multithread
         public void CorrectGrid(ref List<Integral> Subs, double K0)
         {
             //Ищем отрезки с максимальной и минимальной производной(модуль)
-            double maxTg = ATg(Subs[0].LowerLimit, Subs[0].UpperLimit);
-            double minTg = ATg(Subs[0].LowerLimit, Subs[0].UpperLimit);
+            double maxTg = Math.Abs(Tg(Subs[0].LowerLimit, Subs[0].UpperLimit));
+            // double minTg = ATg(Subs[0].LowerLimit, Subs[0].UpperLimit);
             int imax = 0;
-            int imin = 0;
+           // int imin = 0;
             for(int i=1;i<Subs.Count;i++)
             {
-                double atg = ATg(Subs[i].LowerLimit, Subs[i].UpperLimit);
+                double atg = Math.Abs(Tg(Subs[i].LowerLimit, Subs[i].UpperLimit));
                 if (atg > maxTg)
                 {
                     maxTg = atg;
                     imax = i;
                 }
-                else if (atg < minTg)
+                //else if (atg < minTg)
+                //{
+                //    minTg = atg;
+                //    imin = i;
+                //}
+            }
+            /*Если максимум больше К0, сжимаем отрезок с максимальной производной в 2 раза в сторону 
+большего значения функции(по модулю),пока модуль производной не станет меньше или равным к0 остальное пытаемся разбить поровну между остальными потоками*/
+            //double K = maxTg / minTg;
+            bool changed = false; //флаг изменения            
+            double a = Subs[0].LowerLimit;//границы целого отрезка
+            double b = Subs[Subs.Count-1].UpperLimit;
+
+            while ((Math.Abs(Tg(Subs[imax].LowerLimit, Subs[imax].UpperLimit))>K0) 
+                && ((Subs[imax].UpperLimit - Subs[imax].LowerLimit) > Subs[imax].Eps))
+            {
+                double middle = (Subs[imax].UpperLimit + Subs[imax].LowerLimit) / 2;
+                if(Math.Abs(Tg(Subs[imax].LowerLimit, middle))>= Math.Abs(Tg(middle, Subs[imax].UpperLimit)))
                 {
-                    minTg = atg;
-                    imin = i;
+                    Subs[imax].UpperLimit = middle;
+                }
+                else
+                {
+                    Subs[imax].LowerLimit = middle;
+                }
+                changed = true;
+            }
+           
+            if(changed)
+            {
+                //Если отрезок с максимумом с краю, то разбиваем остальную часть поровну
+                if(Subs[imax].LowerLimit==a)
+                {
+                    double h = (b - Subs[imax].UpperLimit) / (Subs.Count-1);
+                    for (int i=1;i<Subs.Count;i++)
+                    {
+                        Subs[i].LowerLimit = Subs[i - 1].UpperLimit;
+                        Subs[i].UpperLimit = Subs[i].LowerLimit + h;
+                    }
+                }
+                else if(Subs[imax].UpperLimit == b)
+                {
+                    double h = (Subs[imax].LowerLimit - a) / (Subs.Count - 1);
+                    for (int i = 0; i < Subs.Count-1; i++)
+                    {
+                        Subs[i].LowerLimit = a + h*i;
+                        Subs[i].UpperLimit = Subs[i].LowerLimit + h;
+                    }
+                }
+                /*Если слева не помещается ни одного целого отрезка, принимаем эту часть за один отрезок.
+                  Если слева от сжатого отрезка помещается положительное число отрезков(как поровну), то разбиваем эту часть, 
+                 округляя число отрезков в меньшую сторону. Часть справа разбиваем на оставшееся число отрезков*/
+                else
+                {
+
                 }
             }
-            /*Если отношение К максимума к минимуму больше К0, сжимаем отрезок с максимальной производной в К раз в сторону 
-большего значения функции(по модулю), остальное пытаемся разбить поровну между остальными потоками*/
-            double K = maxTg / minTg;
-            if(K > K0)
-            {
-
-                //Если отрезок с максимумом с краю, то разбиваем остальную часть поровну
-                /*Если слева от сжатого отрезка помещается положительное число отрезков(как поровну), то разбиваем эту часть, 
-                 округляя число отрезков в меньшую сторону. Часть справа разбиваем на оставшееся число отрезков*/
-            }
 
         }
 
-        //Оценка производной(модуль тангенса угла наклона прямой)
-        private double ATg(double a, double b)
+        //Оценка производной(тангенс угла наклона прямой)
+        private double Tg(double a, double b)
         {
-            return Math.Abs((F(b) - F(a)) / (b - a));
+            return (F(b) - F(a)) / (b - a);
         }
+
     }
 
     

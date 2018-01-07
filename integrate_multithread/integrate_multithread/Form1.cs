@@ -88,6 +88,8 @@ namespace integrate_multithread
             List<Integral> SubIntegrals = new List<Integral>(threader.Threads.Count); //Список подынтегралов
             try
             {
+                double K = Convert.ToDouble(tbCorrection.Text);
+                threader.K = K;
                 threader.Distribute(I,ref SubIntegrals, thrcount, rbRegular.Checked);
             }
             catch (Exception ex)
