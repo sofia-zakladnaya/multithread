@@ -256,75 +256,77 @@ namespace integrate_multithread
         //Исправление разбиения
         public void CorrectGrid(ref List<Integral> Subs, double K0)
         {
-            //Ищем отрезки с максимальной и минимальной производной(модуль)
-            double maxTg = Math.Abs(Tg(Subs[0].LowerLimit, Subs[0].UpperLimit));
-            // double minTg = ATg(Subs[0].LowerLimit, Subs[0].UpperLimit);
-            int imax = 0;
-           // int imin = 0;
-            for(int i=1;i<Subs.Count;i++)
+            // //Ищем отрезки с максимальной и минимальной производной(модуль)
+            // double maxTg = Math.Abs(Tg(Subs[0].LowerLimit, Subs[0].UpperLimit));
+            // // double minTg = ATg(Subs[0].LowerLimit, Subs[0].UpperLimit);
+            // int imax = 0;
+            //// int imin = 0;
+            // for(int i=1;i<Subs.Count;i++)
+            // {
+            //     double atg = Math.Abs(Tg(Subs[i].LowerLimit, Subs[i].UpperLimit));
+            //     if (atg > maxTg)
+            //     {
+            //         maxTg = atg;
+            //         imax = i;
+            //     }
+            //     //else if (atg < minTg)
+            //     //{
+            //     //    minTg = atg;
+            //     //    imin = i;
+            //     //}
+            // }
+            if(Subs.Count<2)
             {
-                double atg = Math.Abs(Tg(Subs[i].LowerLimit, Subs[i].UpperLimit));
-                if (atg > maxTg)
-                {
-                    maxTg = atg;
-                    imax = i;
-                }
-                //else if (atg < minTg)
-                //{
-                //    minTg = atg;
-                //    imin = i;
-                //}
+                return;
             }
-            /*Если максимум больше К0, сжимаем отрезок с максимальной производной в 2 раза в сторону 
-большего значения функции(по модулю),пока модуль производной не станет меньше или равным к0 остальное пытаемся разбить поровну между остальными потоками*/
-            //double K = maxTg / minTg;
-            bool changed = false; //флаг изменения            
-            double a = Subs[0].LowerLimit;//границы целого отрезка
-            double b = Subs[Subs.Count-1].UpperLimit;
-
-            while ((Math.Abs(Tg(Subs[imax].LowerLimit, Subs[imax].UpperLimit))>K0) 
-                && ((Subs[imax].UpperLimit - Subs[imax].LowerLimit) > Subs[imax].Eps))
+            bool found = true; //Найден отрезок с большой производной
+            while(found)
             {
-                double middle = (Subs[imax].UpperLimit + Subs[imax].LowerLimit) / 2;
-                if(Math.Abs(Tg(Subs[imax].LowerLimit, middle))>= Math.Abs(Tg(middle, Subs[imax].UpperLimit)))
+                found = false;
+                //поиск отрезка с максимальной производной
+                double maxTg = Math.Abs(Tg(Subs[0].LowerLimit, Subs[0].UpperLimit));
+                int imax = 0;
+                for (int i = 1; i < Subs.Count; i++)
                 {
-                    Subs[imax].UpperLimit = middle;
-                }
-                else
-                {
-                    Subs[imax].LowerLimit = middle;
-                }
-                changed = true;
-            }
-           
-            if(changed)
-            {
-                //Если отрезок с максимумом с краю, то разбиваем остальную часть поровну
-                if(Subs[imax].LowerLimit==a)
-                {
-                    double h = (b - Subs[imax].UpperLimit) / (Subs.Count-1);
-                    for (int i=1;i<Subs.Count;i++)
+                    double atg = Math.Abs(Tg(Subs[i].LowerLimit, Subs[i].UpperLimit));
+                    if (atg > maxTg)
                     {
-                        Subs[i].LowerLimit = Subs[i - 1].UpperLimit;
-                        Subs[i].UpperLimit = Subs[i].LowerLimit + h;
+                        maxTg = atg;
+                        imax = i;
                     }
                 }
-                else if(Subs[imax].UpperLimit == b)
+                //Сравниваем максимум с параметром корректировки
+                if((maxTg> K0) && (Subs[imax].UpperLimit - Subs[imax].LowerLimit) > Subs[imax].Eps)
                 {
-                    double h = (Subs[imax].LowerLimit - a) / (Subs.Count - 1);
-                    for (int i = 0; i < Subs.Count-1; i++)
+                    found = true;
+
+                    //Сжимаем отрезок с максимальной производной
+                    while((Math.Abs(Tg(Subs[imax].LowerLimit, Subs[imax].UpperLimit))>K0)
+                        &&(Subs[imax].UpperLimit- Subs[imax].LowerLimit) >Subs[imax].Eps)
                     {
-                        Subs[i].LowerLimit = a + h*i;
-                        Subs[i].UpperLimit = Subs[i].LowerLimit + h;
+                        double middle = (Subs[imax].UpperLimit + Subs[imax].LowerLimit) / 2;
+                        if(Math.Abs(Tg(Subs[imax].LowerLimit, middle))> Math.Abs(Tg(middle, Subs[imax].UpperLimit)))
+                        {
+                            Subs[imax].UpperLimit = middle;
+                        }
+                        else
+                        {
+                            Subs[imax].LowerLimit = middle;
+                        }
+
+                    }
+                    //Пристыковываем соседние отрезки
+                    if(imax>0)
+                    {
+                        Subs[imax - 1].UpperLimit = Subs[imax].LowerLimit;
+                    }
+
+                    if (imax < Subs.Count-1)
+                    {
+                        Subs[imax + 1].LowerLimit = Subs[imax].UpperLimit;
                     }
                 }
-                /*Если слева не помещается ни одного целого отрезка, принимаем эту часть за один отрезок.
-                  Если слева от сжатого отрезка помещается положительное число отрезков(как поровну), то разбиваем эту часть, 
-                 округляя число отрезков в меньшую сторону. Часть справа разбиваем на оставшееся число отрезков*/
-                else
-                {
 
-                }
             }
 
         }
