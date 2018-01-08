@@ -284,46 +284,57 @@ namespace integrate_multithread
             {
                 found = false;
                 //поиск отрезка с максимальной производной
-                double maxTg = Math.Abs(Tg(Subs[0].LowerLimit, Subs[0].UpperLimit));
-                int imax = 0;
-                for (int i = 1; i < Subs.Count; i++)
+                double maxTg = 0;//Math.Abs(Tg(Subs[0].LowerLimit, Subs[0].UpperLimit));
+                int imax = -1;
+                for (int i = 0; i < Subs.Count; i++)
                 {
                     double atg = Math.Abs(Tg(Subs[i].LowerLimit, Subs[i].UpperLimit));
-                    if (atg > maxTg)
+                    if ((atg > maxTg) && ((Subs[i].UpperLimit - Subs[i].LowerLimit) > Subs[i].Eps))
                     {
                         maxTg = atg;
                         imax = i;
                     }
                 }
                 //Сравниваем максимум с параметром корректировки
-                if((maxTg> K0) && (Subs[imax].UpperLimit - Subs[imax].LowerLimit) > Subs[imax].Eps)
+                if (imax >= 0)
                 {
-                    found = true;
 
-                    //Сжимаем отрезок с максимальной производной
-                    while((Math.Abs(Tg(Subs[imax].LowerLimit, Subs[imax].UpperLimit))>K0)
-                        &&(Subs[imax].UpperLimit- Subs[imax].LowerLimit) >Subs[imax].Eps)
+
+                    if ((maxTg > K0) && (Subs[imax].UpperLimit - Subs[imax].LowerLimit) > Subs[imax].Eps*10)
                     {
-                        double middle = (Subs[imax].UpperLimit + Subs[imax].LowerLimit) / 2;
-                        if(Math.Abs(Tg(Subs[imax].LowerLimit, middle))> Math.Abs(Tg(middle, Subs[imax].UpperLimit)))
+                        found = true;
+                        bool changed = false;
+                        //Сжимаем отрезок с максимальной производной
+                        while ((Math.Abs(Tg(Subs[imax].LowerLimit, Subs[imax].UpperLimit)) > K0)
+                            && (Subs[imax].UpperLimit - Subs[imax].LowerLimit) > Subs[imax].Eps*10)
                         {
-                            Subs[imax].UpperLimit = middle;
+                            double middle = (Subs[imax].UpperLimit + Subs[imax].LowerLimit) / 2;
+                            if (Math.Abs(Tg(Subs[imax].LowerLimit, middle)) > Math.Abs(Tg(middle, Subs[imax].UpperLimit))
+                                && (imax < Subs.Count-1))
+                            {
+                                changed = true;
+                                Subs[imax].UpperLimit = middle;
+                            }
+                            else if(imax > 0)
+                            {
+                                changed = true;
+                                Subs[imax].LowerLimit = middle;
+                            }
+
                         }
-                        else
+                        if (changed)
                         {
-                            Subs[imax].LowerLimit = middle;
+                            //Пристыковываем соседние отрезки
+                            if (imax > 0)
+                            {
+                                Subs[imax - 1].UpperLimit = Subs[imax].LowerLimit;
+                            }
+
+                            if (imax < Subs.Count - 1)
+                            {
+                                Subs[imax + 1].LowerLimit = Subs[imax].UpperLimit;
+                            }
                         }
-
-                    }
-                    //Пристыковываем соседние отрезки
-                    if(imax>0)
-                    {
-                        Subs[imax - 1].UpperLimit = Subs[imax].LowerLimit;
-                    }
-
-                    if (imax < Subs.Count-1)
-                    {
-                        Subs[imax + 1].LowerLimit = Subs[imax].UpperLimit;
                     }
                 }
 
