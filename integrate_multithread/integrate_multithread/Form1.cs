@@ -1,11 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-//using System.ComponentModel;
-//using System.Data;
-//using System.Drawing;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace integrate_multithread
@@ -52,9 +46,6 @@ namespace integrate_multithread
             }
 
             //Если параметры заданы корректно, запускаем решение
-            //Формируем интеграл
-            //for (int i = 1; i <= 10; i++)
-            //{
             int method = -1;
             if (rbRectangle.Checked)
             {
@@ -77,9 +68,6 @@ namespace integrate_multithread
                 Convert.ToDouble(tbUpperLimit.Text), 
                 cbFunction.SelectedIndex, 
                 Convert.ToDouble(tbAccuracy.Text), method);
-                //I.LowerLimit = Convert.ToDouble(tbLowerLimit.Text);
-                //I.UpperLimit = Convert.ToDouble(tbUpperLimit.Text);
-                //I.Eps = Convert.ToDouble(tbAccuracy.Text);
                
             //Распределяем по потокам
             Threader threader = new Threader();
@@ -110,29 +98,12 @@ namespace integrate_multithread
             dgResults.Rows[dgResults.RowCount - 1].Cells[2].Value = I.Value;
             dgResults.Rows[dgResults.RowCount - 1].Cells[0].Value = threader.Threads.Count;
             dgResults.Rows[dgResults.RowCount - 1].Cells[1].Value = threader.TotalTime.TotalMilliseconds;
-           // dgResults.Rows[dgResults.RowCount - 1].Cells[3].Value = "";
-            //foreach (Integral i in SubIntegrals)
-            //{
-            //    dgResults.Rows[dgResults.RowCount - 1].Cells[3].Value += "("+i.LowerLimit.ToString() + "; "+ i.UpperLimit.ToString()+") ";
-            //}
-
-            //}
-            ////в textbox
-            //for(int i=0; i<I.SubIntegrals.Count;i++)
-            //{
-            //    textBox1.Text += "[" +I.SubIntegrals[i].LowerLimit.ToString()+ ";" + I.SubIntegrals[i].UpperLimit.ToString() + "]" + Environment.NewLine;
-            //}
-            //textBox1.Text += "Число потоков: "+threader.Threads.Count.ToString() +". Время выполнения: "+threader.TotalTime.TotalMilliseconds+" мс" + Environment.NewLine;
-
-
         }
 
         public int Verify()
         {
             double a, b, eps;
-            int k;
-           
-           
+            int k;           
 
             //проверяем, выбрана ли подынтегральная функция
             if (cbFunction.SelectedIndex < 0)
@@ -143,7 +114,6 @@ namespace integrate_multithread
             a = Convert.ToDouble(tbLowerLimit.Text);
             b = Convert.ToDouble(tbUpperLimit.Text);
            
-
             //проверяем отрезок интегрирования
             if (a>b)
             {

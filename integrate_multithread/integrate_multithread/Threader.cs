@@ -47,17 +47,10 @@ namespace integrate_multithread
                 //Инициализируем список потоков
                 Threads = new List<Thread>();
                 //Делим отрезок интегрирования между потоками
-                //SubIntegrals = new List<Integral>();
                 double h = (I.UpperLimit - I.LowerLimit) / threadscount;
-               // double h = (I.UpperLimit - I.LowerLimit) / I.N;
                 for (int i = 0; i < threadscount; i++)
                 { 
                     Integral intg = new Integral(I.LowerLimit + i * h, I.LowerLimit + (i + 1) * h,I.F,I.Eps/threadscount,I.Method);
-                    //Изменяем пределы и точность
-                    //intg.Eps /= threadscount;
-                    
-                    //intg.LowerLimit = I.LowerLimit + i * h;
-                    //intg.UpperLimit = I.LowerLimit + (i + 1) * h;
                     //Включаем интеграл в список
                     SubIntegrals.Add(intg);
                     //Создаём поток и добавляем в список
@@ -69,7 +62,6 @@ namespace integrate_multithread
             //Неравномерная сетка
             else
             {
-                //throw new Exception("Неравномерное разбиение в разработке");
                 //Инициализируем список потоков
                 Threads = new List<Thread>();
                 //Делим отрезок интегрирования сначала поровну между потоками
@@ -84,7 +76,6 @@ namespace integrate_multithread
                 //Корректируем разбиение
                 if (threadscount > 1)
                 {
-                    //double K0 = 1000000; //параметр корректировки разбиения
                     I.CorrectGrid(ref SubIntegrals, K);
                 }
                 //Создаём потоки
@@ -119,14 +110,6 @@ namespace integrate_multithread
             //Фиксируем время
             FinishTime = DateTime.Now;
         }
-
-        ////Вычисление ускорения
-        //public double Acceleration(TimeSpan onethread)
-        //{
-        //    return (onethread.TotalMilliseconds /TotalTime.TotalMilliseconds);
-        //}
     }
-
-    //public delegate double Function(double x);
    
 }

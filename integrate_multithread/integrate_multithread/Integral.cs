@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-////using System.Linq;
-////using System.Text;
-//using System.Threading;
 
 namespace integrate_multithread
 {
@@ -19,11 +16,8 @@ namespace integrate_multithread
         public int N { get; set; }
         //Метод интегрирования
         public IntgMethod Method { get; set; }
-        //Разбиения
-       // public List<Integral> SubIntegrals { get; set; }
         //Результаты интегрирования
         public double Value { get; set; }
-
 
         //Конструкторы
         public Integral()
@@ -47,7 +41,6 @@ namespace integrate_multithread
             Method = method;
             N = 2;
         }
-
         public Integral(double lower, double upper, int func, double eps, int method)
         {
             // SubIntegrals = new List<Integral>();
@@ -68,6 +61,7 @@ namespace integrate_multithread
             Method = method;
             N = 2;
         }
+      
         //Вычисление значения интеграла
         public void Solve()
         {
@@ -80,43 +74,6 @@ namespace integrate_multithread
                 N *= 2;
                 Value = Method(LowerLimit, UpperLimit, N);
             }
-            // Value = Method(LowerLimit,UpperLimit);
-            //Value = 22;
-            //Thread.Sleep(2000);
-            //TODO
-            // int N = 10;
-            //double S = 0;
-            //double h = (UpperLimit - LowerLimit) / N;
-            //for (int i = 0; i < N; i++)
-            //{
-            //    //метод трапеций
-            //    //S += ((F(x(i, h)) + F(x(i + 1, h))) / 2) * (x(i + 1, h) - x(i, h));
-            //    S += F((x(i, h) + x(i + 1, h)) / 2) * (x(i + 1, h) - x(i, h)); //метод прямоугольников
-            //}
-            //Value = S;
-            //S = 0;
-            //N *= 2;
-            //h = (UpperLimit - LowerLimit) / N;
-            //for (int i = 0; i < N; i++)
-            //{
-            //    //метод трапеций
-            //    //S += ((F(x(i, h)) + F(x(i + 1, h))) / 2) * (x(i + 1, h) - x(i, h));
-            //    S += F((x(i, h) + x(i + 1, h)) / 2) * (x(i + 1, h) - x(i, h)); //метод прямоугольников
-            //}
-
-            //while (Math.Abs(Value - S) > Eps)
-            //{
-            //    Value = S;
-            //    S = 0;
-            //    N *= 2;
-            //    h = (UpperLimit - LowerLimit) / N;
-            //    for (int i = 0; i < N; i++)
-            //    {
-            //        //метод трапеций
-            //        //S += ((F(x(i, h)) + F(x(i + 1, h))) / 2) * (x(i + 1, h) - x(i, h));
-            //        S += F((x(i, h) + x(i + 1, h)) / 2) * (x(i + 1, h) - x(i, h)); //метод прямоугольников
-            //    }
-            //}
 
         }
 
@@ -131,7 +88,7 @@ namespace integrate_multithread
         public void TotalValue(List<Integral> I)
         {
             Value = 0;
-            foreach(Integral i in  I/*SubIntegrals*/)
+            foreach(Integral i in  I)
             {
                 Value += i.Value;
             }
@@ -140,7 +97,6 @@ namespace integrate_multithread
         //Получение делегата подынтегральной функции
         private Function GetFuncDelegate(int i)
         {
-            //TODO: дописать весь список функций
             switch(i)
             {
                 case 0:
@@ -195,7 +151,6 @@ namespace integrate_multithread
         //Метод прямоугольников
         private double Rectangle(double a, double b, int n)
         {
-            //throw new Exception("Метод нереализован");
             double S = 0; //результат
             double h = (b - a) / n; //шаг
 
@@ -212,7 +167,6 @@ namespace integrate_multithread
         //Метод трапеций
         private double Trapezoid(double a, double b, int n)
         {
-            //throw new Exception("Метод нереализован");
             double S = 0; //результат
             double h = (b - a) / n; //шаг
             S = (F(x(a,0,h))+ F(x(a, n, h))) / 2;
@@ -256,25 +210,6 @@ namespace integrate_multithread
         //Исправление разбиения
         public void CorrectGrid(ref List<Integral> Subs, double K0)
         {
-            // //Ищем отрезки с максимальной и минимальной производной(модуль)
-            // double maxTg = Math.Abs(Tg(Subs[0].LowerLimit, Subs[0].UpperLimit));
-            // // double minTg = ATg(Subs[0].LowerLimit, Subs[0].UpperLimit);
-            // int imax = 0;
-            //// int imin = 0;
-            // for(int i=1;i<Subs.Count;i++)
-            // {
-            //     double atg = Math.Abs(Tg(Subs[i].LowerLimit, Subs[i].UpperLimit));
-            //     if (atg > maxTg)
-            //     {
-            //         maxTg = atg;
-            //         imax = i;
-            //     }
-            //     //else if (atg < minTg)
-            //     //{
-            //     //    minTg = atg;
-            //     //    imin = i;
-            //     //}
-            // }
             if(Subs.Count<2)
             {
                 return;
@@ -284,7 +219,7 @@ namespace integrate_multithread
             {
                 found = false;
                 //поиск отрезка с максимальной производной
-                double maxTg = 0;//Math.Abs(Tg(Subs[0].LowerLimit, Subs[0].UpperLimit));
+                double maxTg = 0;
                 int imax = -1;
                 for (int i = 0; i < Subs.Count; i++)
                 {
