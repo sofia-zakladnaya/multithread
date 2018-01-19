@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace integrate_multithread
 {
@@ -18,6 +19,13 @@ namespace integrate_multithread
         public IntgMethod Method { get; set; }
         //Результаты интегрирования
         public double Value { get; set; }
+
+        //счётчики для рекурсии
+        public int n1 { get; set; } //общее кол=во потоков
+        public int k { get; set; } //текущее
+        public DateTime StartTime; //время
+        public DateTime FinishTime;
+        public TimeSpan TotalTime { get { return FinishTime - StartTime; } }
 
         //Конструкторы
         public Integral()
@@ -61,7 +69,20 @@ namespace integrate_multithread
             Method = method;
             N = 2;
         }
-      
+
+        public Integral(double lower, double upper, Function func, double eps, IntgMethod method, int N1, int K1)
+        {
+            // SubIntegrals = new List<Integral>();
+            F = func;
+            LowerLimit = lower;
+            UpperLimit = upper;
+            Eps = eps;
+            Method = method;
+            N = 2;
+            n1 = N1;
+            k = K1;
+        }
+
         //Вычисление значения интеграла
         public void Solve()
         {
@@ -75,6 +96,30 @@ namespace integrate_multithread
                 Value = Method(LowerLimit, UpperLimit, N);
             }
 
+        }
+
+        //рекурсивное решение
+        public void SolveR()
+        {
+            if(k<1)
+            {
+                Value = 0;
+                return;
+            }
+            //Создаём поток для рекурсивного вызова
+            double h = (UpperLimit - LowerLimit) / k;
+            Integral I = new Integral(LowerLimit + h, UpperLimit, F, Eps, Method,n1,k - 1);
+            ThreadStart solver = new ThreadStart(I.SolveR);
+            Thread thread = new Thread(solver);
+            //Запускаем поток
+            thread.Start();
+            //Запускаем решение на текущем подотрезке
+            Integral I0 = new Integral(LowerLimit, LowerLimit + h, F, Eps/n1, Method);
+            I0.Solve();
+            //Синхронизируем
+            thread.Join();
+            //Складываем результаты
+            Value = I.Value + I0.Value;
         }
 
 
