@@ -63,41 +63,61 @@ namespace integrate_multithread
             {
                 return;
             }
+            int thrcount = Convert.ToInt32(/*i*/tbThreadsNum.Text);
             Integral I = new Integral(
                 Convert.ToDouble(tbLowerLimit.Text), 
                 Convert.ToDouble(tbUpperLimit.Text), 
                 cbFunction.SelectedIndex, 
                 Convert.ToDouble(tbAccuracy.Text), method);
-               
-            //Распределяем по потокам
-            Threader threader = new Threader();
-            int thrcount = Convert.ToInt32(/*i*/tbThreadsNum.Text);
+           
 
-            List<Integral> SubIntegrals = new List<Integral>(threader.Threads.Count); //Список подынтегралов
-            try
+            //Если выбрана рекурсия
+            if (rbRecurs.Checked)
             {
-                double K = Convert.ToDouble(tbCorrection.Text);
-                threader.K = K;
-                threader.Distribute(I,ref SubIntegrals, thrcount, rbRegular.Checked);
+                I.n1 = thrcount;
+                I.k = I.n1;
+                I.StartTime = DateTime.Now; //старт
+                I.SolveR();
+                I.FinishTime = DateTime.Now; //Финиш
+                //вывод результата
+                dgResults.Rows.Add();
+                dgResults.Rows[dgResults.RowCount - 1].Cells[2].Value = I.Value;
+                dgResults.Rows[dgResults.RowCount - 1].Cells[0].Value = I.n1;
+                dgResults.Rows[dgResults.RowCount - 1].Cells[1].Value = I.TotalTime.TotalMilliseconds;
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show(ex.Message);
-            }
-            //Запускаем выполнение
-            threader.StartAll();
-            StatusBar.Items[0].Text = "Все потоки запущены";
+                //Распределяем по потокам
+                Threader threader = new Threader();
+              
 
-            //Завершаем потоки
-            threader.JoinAll();
-            StatusBar.Items[0].Text = "Все потоки завершены";
-            // сбор общего результата
-            I.TotalValue(SubIntegrals);
-            //вывод результатов в таблицу
-            dgResults.Rows.Add();
-            dgResults.Rows[dgResults.RowCount - 1].Cells[2].Value = I.Value;
-            dgResults.Rows[dgResults.RowCount - 1].Cells[0].Value = threader.Threads.Count;
-            dgResults.Rows[dgResults.RowCount - 1].Cells[1].Value = threader.TotalTime.TotalMilliseconds;
+                List<Integral> SubIntegrals = new List<Integral>(threader.Threads.Count); //Список подынтегралов
+                try
+                {
+                    double K = Convert.ToDouble(tbCorrection.Text);
+                    threader.K = K;
+                    threader.Distribute(I, ref SubIntegrals, thrcount, rbRegular.Checked);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                //Запускаем выполнение
+                threader.StartAll();
+                StatusBar.Items[0].Text = "Все потоки запущены";
+
+                //Завершаем потоки
+                threader.JoinAll();
+                StatusBar.Items[0].Text = "Все потоки завершены";
+                // сбор общего результата
+                I.TotalValue(SubIntegrals);
+                //вывод результатов в таблицу
+                dgResults.Rows.Add();
+                dgResults.Rows[dgResults.RowCount - 1].Cells[2].Value = I.Value;
+                dgResults.Rows[dgResults.RowCount - 1].Cells[0].Value = threader.Threads.Count;
+                dgResults.Rows[dgResults.RowCount - 1].Cells[1].Value = threader.TotalTime.TotalMilliseconds;
+            }
+                
         }
 
         public int Verify()

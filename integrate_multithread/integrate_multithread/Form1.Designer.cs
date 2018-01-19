@@ -58,6 +58,7 @@
             this.IntegralValue = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.StatusBar = new System.Windows.Forms.StatusStrip();
             this.StatusText = new System.Windows.Forms.ToolStripStatusLabel();
+            this.rbRecurs = new System.Windows.Forms.RadioButton();
             this.menuStrip1.SuspendLayout();
             this.pnSettings.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbThreadsNum)).BeginInit();
@@ -111,13 +112,13 @@
             this.pnSettings.Controls.Add(this.gbIntMethod);
             this.pnSettings.Location = new System.Drawing.Point(563, 27);
             this.pnSettings.Name = "pnSettings";
-            this.pnSettings.Size = new System.Drawing.Size(200, 478);
+            this.pnSettings.Size = new System.Drawing.Size(200, 535);
             this.pnSettings.TabIndex = 2;
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 383);
+            this.label4.Location = new System.Drawing.Point(6, 456);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(138, 13);
             this.label4.TabIndex = 13;
@@ -125,7 +126,7 @@
             // 
             // tbCorrection
             // 
-            this.tbCorrection.Location = new System.Drawing.Point(3, 399);
+            this.tbCorrection.Location = new System.Drawing.Point(3, 472);
             this.tbCorrection.Name = "tbCorrection";
             this.tbCorrection.Size = new System.Drawing.Size(188, 20);
             this.tbCorrection.TabIndex = 12;
@@ -133,7 +134,7 @@
             // 
             // tbThreadsNum
             // 
-            this.tbThreadsNum.Location = new System.Drawing.Point(3, 347);
+            this.tbThreadsNum.Location = new System.Drawing.Point(3, 420);
             this.tbThreadsNum.Minimum = new decimal(new int[] {
             1,
             0,
@@ -150,11 +151,12 @@
             // 
             // gbGridType
             // 
+            this.gbGridType.Controls.Add(this.rbRecurs);
             this.gbGridType.Controls.Add(this.rbIrregular);
             this.gbGridType.Controls.Add(this.rbRegular);
             this.gbGridType.Location = new System.Drawing.Point(3, 211);
             this.gbGridType.Name = "gbGridType";
-            this.gbGridType.Size = new System.Drawing.Size(188, 66);
+            this.gbGridType.Size = new System.Drawing.Size(188, 98);
             this.gbGridType.TabIndex = 3;
             this.gbGridType.TabStop = false;
             this.gbGridType.Text = "Сетка";
@@ -184,7 +186,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 331);
+            this.label3.Location = new System.Drawing.Point(6, 404);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(83, 13);
             this.label3.TabIndex = 10;
@@ -192,7 +194,7 @@
             // 
             // tbAccuracy
             // 
-            this.tbAccuracy.Location = new System.Drawing.Point(3, 297);
+            this.tbAccuracy.Location = new System.Drawing.Point(3, 370);
             this.tbAccuracy.Name = "tbAccuracy";
             this.tbAccuracy.Size = new System.Drawing.Size(188, 20);
             this.tbAccuracy.TabIndex = 9;
@@ -201,7 +203,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 281);
+            this.label2.Location = new System.Drawing.Point(6, 354);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(54, 13);
             this.label2.TabIndex = 8;
@@ -209,7 +211,7 @@
             // 
             // btnClearResults
             // 
-            this.btnClearResults.Location = new System.Drawing.Point(116, 447);
+            this.btnClearResults.Location = new System.Drawing.Point(116, 504);
             this.btnClearResults.Name = "btnClearResults";
             this.btnClearResults.Size = new System.Drawing.Size(75, 28);
             this.btnClearResults.TabIndex = 7;
@@ -219,7 +221,7 @@
             // 
             // btnSolve
             // 
-            this.btnSolve.Location = new System.Drawing.Point(3, 447);
+            this.btnSolve.Location = new System.Drawing.Point(3, 504);
             this.btnSolve.Name = "btnSolve";
             this.btnSolve.Size = new System.Drawing.Size(75, 28);
             this.btnSolve.TabIndex = 6;
@@ -333,7 +335,7 @@
             this.dgResults.Location = new System.Drawing.Point(0, 27);
             this.dgResults.Name = "dgResults";
             this.dgResults.ReadOnly = true;
-            this.dgResults.Size = new System.Drawing.Size(557, 478);
+            this.dgResults.Size = new System.Drawing.Size(557, 535);
             this.dgResults.TabIndex = 3;
             // 
             // ThreadNumber
@@ -361,7 +363,7 @@
             // 
             this.StatusBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.StatusText});
-            this.StatusBar.Location = new System.Drawing.Point(0, 508);
+            this.StatusBar.Location = new System.Drawing.Point(0, 565);
             this.StatusBar.Name = "StatusBar";
             this.StatusBar.Size = new System.Drawing.Size(763, 22);
             this.StatusBar.TabIndex = 4;
@@ -372,11 +374,22 @@
             this.StatusText.Name = "StatusText";
             this.StatusText.Size = new System.Drawing.Size(0, 17);
             // 
+            // rbRecurs
+            // 
+            this.rbRecurs.AutoSize = true;
+            this.rbRecurs.Location = new System.Drawing.Point(6, 65);
+            this.rbRecurs.Name = "rbRecurs";
+            this.rbRecurs.Size = new System.Drawing.Size(73, 17);
+            this.rbRecurs.TabIndex = 2;
+            this.rbRecurs.TabStop = true;
+            this.rbRecurs.Text = "Рекурсия";
+            this.rbRecurs.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(763, 530);
+            this.ClientSize = new System.Drawing.Size(763, 587);
             this.Controls.Add(this.StatusBar);
             this.Controls.Add(this.dgResults);
             this.Controls.Add(this.pnSettings);
@@ -432,6 +445,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn IntegralValue;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox tbCorrection;
+        private System.Windows.Forms.RadioButton rbRecurs;
     }
 }
 
